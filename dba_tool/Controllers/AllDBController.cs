@@ -22,6 +22,11 @@ namespace dba_tool.Controllers
 			return View(dbss);
 		}
 
+		public IActionResult Dashboard()
+		{
+			return View();
+		}
+
 		public void FetchData()
 		{
 			try
