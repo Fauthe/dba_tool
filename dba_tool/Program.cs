@@ -1,7 +1,13 @@
+using dba_tool.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using System.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//builder.Services.AddDbContext<DBAdbcontext>(options => options.UseSqlServer(Configuration.GetConnectionString("AppCon"));
 
 var app = builder.Build();
 

@@ -1,0 +1,16 @@
+﻿
+<h3>Select Database</h3>
+<select class="form-select" aria-label="Default select example">
+
+	@{
+		if (Model != null)
+		{
+			foreach (var Data in Model)
+			{
+				<option selected>
+					@Data.Name
+				</option>
+			}
+		}
+	}
+</select>
