@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Drawing;
 
 namespace dba_tool
 {
@@ -63,6 +64,23 @@ namespace dba_tool
 				command.CommandText = SqlQuery;
 				command.CommandType = CommandType.Text;
 				command.ExecuteNonQuery();
+
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+
+		public static SqlDataReader ExecuteQuery(String SqlQuery)
+		{
+			try
+			{
+				SqlCommand command = new SqlCommand();
+				command.Connection = DBConnect();
+				command.CommandText = SqlQuery;
+				command.CommandType = CommandType.Text;
+				return command.ExecuteReader();
 
 			}
 			catch (Exception)

@@ -1,16 +1,22 @@
 ﻿
-<h3>Select Database</h3>
-<select class="form-select" aria-label="Default select example">
 
-	@{
-		if (Model != null)
-		{
-			foreach (var Data in Model)
+<form action="/employee/add" method="post" class="row" enctype="multipart/form-data">
+	<h3>Select Database</h3>
+	<select class="form-select" aria-label="Default select example">
+
+		@{
+			if (Model != null)
 			{
-				<option selected>
-					@Data.Name
-				</option>
+				<option selected>Select Database</option>
+				foreach (var Data in Model)
+				{
+					<option>
+						@Data.Name
+					</option>
+				}
 			}
 		}
-	}
-</select>
+	</select> <br><br>
+	<button type="submit" class="btn btn-secondary btn-sm">Proceed</button>
+</form>
+
