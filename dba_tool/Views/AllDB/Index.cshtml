@@ -1,5 +1,6 @@
 ﻿
 
+
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
@@ -30,33 +31,39 @@
 							<h3 class="card-title">Choose Database</h3>
 						</div>
 						<!-- /.card-header -->
-						<!-- form start -->
-						<form id="quickForm" action="alldb/dashboard" method="post">
-							<div class="card-body">
-								<div class="form-group">
-									<select class="form-control" aria-label="Default select example">
+						<!-- form start action="alldb/dashboard" -->
 
-										@{
-											if (Model != null)
-											{
-												<option selected>Select Database</option>
-												foreach (var Data in Model)
-												{
-													<option>
-														@Data.Name
-													</option>
-												}
-											}
-										}
-									</select> 
-									@*<input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">*@
-								</div>
-							</div>
-							<!-- /.card-body -->
-							<div class="card-footer">
-								<button type="submit" class="btn btn-primary">Proceed</button>
-							</div>
-						</form>
+
+
+						<form id="quickForm" action="alldb/dashboard" method="post">
+			<div class="card-body">
+				<div class="form-group">
+					@{
+						if (Model != null)
+						{
+						<select class="form-control" aria-label="Default select example" @ViewBag.selectDB>
+
+							<option selected>Select Database</option>
+															@{
+																foreach (var Data in Model)
+																{
+																	<option>
+																		@Data.Name
+																	</option>
+																	}
+																}
+
+															</select>
+						}
+					}
+
+				</div>
+			</div>
+
+			<div class="card-footer">
+				<button type="submit" class="btn btn-primary" value="selectedDB">Proceed</button>
+			</div>
+		</form>
 					</div>
 					<!-- /.card -->
 				</div>
