@@ -31,15 +31,14 @@ namespace dba_tool.Controllers
 		{
 
 
-			string selecteddb = databs.Name;
 			//tempdata.add("cdb",strddlvalue);
-			return View();
+			return RedirectToAction("Dashboard");
 		}
 
 		public IActionResult Dashboard(string selectedDB)
 		{
-			ViewBag.selecteddb = selectedDB;
-			return View(selectedDB);
+			ViewBag.SelectedDB = selectedDB;
+			return View();
 		}
 
 		public IActionResult DiskUsage()
