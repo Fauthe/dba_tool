@@ -7,6 +7,7 @@ namespace dba_tool.Controllers
 	public class AllDBController : Controller
 	{
 		List<dbs> dbss = new List<dbs>();
+		dbs dbsss = new dbs();
 		SqlDataReader dr;
 		DBconnection db;
 		private readonly ILogger<AllDBController> _logger;
@@ -18,14 +19,34 @@ namespace dba_tool.Controllers
 
 		public IActionResult Index()
 		{
+			
 			FetchData();
+			
 			return View(dbss);
+
 		}
 
-		public IActionResult Dashboard()
+		[HttpPost]
+		public IActionResult index(dbs databs)
 		{
+
+
+			//tempdata.add("cdb",strddlvalue);
+			return RedirectToAction("Dashboard");
+		}
+
+		public IActionResult Dashboard(string selectedDB)
+		{
+			ViewBag.SelectedDB = selectedDB;
 			return View();
 		}
+
+		public IActionResult DiskUsage()
+		{
+			//ViewBag.Name = name;
+			return View();
+		}
+
 
 		public void FetchData()
 		{
