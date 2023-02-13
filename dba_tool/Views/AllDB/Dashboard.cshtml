@@ -32,109 +32,80 @@
 						<div class="card-body">
 							<div class="row">
 								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 180px">
-										<div class="ribbon-wrapper">
-											<div class="ribbon bg-primary">
-												Ribbon
-											</div>
-										</div>
-										Ribbon Default
-										<br />
-										<small>.ribbon-wrapper.ribbon-lg .ribbon</small>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 180px">
+									<div class="position-relative p-3 bg-gray" style="height: 170px">
 										<div class="ribbon-wrapper ribbon-lg">
 											<div class="ribbon bg-info">
-												Ribbon Large
+												Tables
 
-												
+
 											</div>
 										</div>
-										Ribbon Large <br />
-										<small>.ribbon-wrapper.ribbon-lg .ribbon</small>
+										Total Number of Tables <br /><br />
+										<h6 style=" padding-left:20px">@ViewBag.tableCount</h6><br />
+										<a href="#" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
 								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 180px">
-										<div class="ribbon-wrapper ribbon-xl">
+									<div class="position-relative p-3 bg-gray" style="height: 170px">
+										<div class="ribbon-wrapper ribbon-lg">
+											<div class="ribbon bg-info">
+												Views
+
+
+											</div>
+										</div>
+										Total Number of Views <br /><br />
+										<h6 style=" padding-left:20px">@ViewBag.viewCount</h6><br />
+										<a href="#" class="btn btn-primary">More Details</a>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="position-relative p-3 bg-gray" style="height: 170px">
+										<div class="ribbon-wrapper ribbon-lg">
 											<div class="ribbon bg-secondary">
-												Ribbon Extra Large
+												Indexes
 											</div>
 										</div>
-										Ribbon Extra Large <br />
-										<small>.ribbon-wrapper.ribbon-xl .ribbon</small>
+										Total Number of Indexes <br /><br />
+										<h6 style="padding-left: 20px">@ViewBag.indexCount</h6><br />
+										<a href="#" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
 							</div>
 							<div class="row mt-4">
 								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 180px">
+									<div class="position-relative p-3 bg-gray" style="height: 170px">
 										<div class="ribbon-wrapper ribbon-lg">
-											<div class="ribbon bg-success text-lg">
-												Ribbon
+											<div class="ribbon bg-info">
+												Database Files
+
+
 											</div>
 										</div>
-										Ribbon Large <br /> with Large Text <br />
-										<small>.ribbon-wrapper.ribbon-lg .ribbon.text-lg</small>
+										Database Files Location <br />
+										<small style=" padding-left:20px">@ViewBag.dataFileName: @ViewBag.dataFilePath </small><br />
+										<small style=" padding-left:20px">@ViewBag.logFileName: @ViewBag.logFilePath </small><br /><br />
+										<a href="#" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
 								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 180px">
-										<div class="ribbon-wrapper ribbon-xl">
-											<div class="ribbon bg-warning text-lg">
-												Ribbon
+									<div class="position-relative p-3 bg-gray" style="height: 170px">
+										<div class="ribbon-wrapper ribbon-lg">
+											<div class="ribbon bg-info">
+												Log Space
+
+
 											</div>
 										</div>
-										Ribbon Extra Large <br /> with Large Text <br />
-										<small>.ribbon-wrapper.ribbon-xl .ribbon.text-lg</small>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 180px">
-										<div class="ribbon-wrapper ribbon-xl">
-											<div class="ribbon bg-danger text-xl">
-												Ribbon
-											</div>
-										</div>
-										Ribbon Extra Large <br /> with Extra Large Text <br />
-										<small>.ribbon-wrapper.ribbon-xl .ribbon.text-xl</small>
+										Log Space Usage <br />
+										<small style=" padding-left:20px">Total Log Space: @ViewBag.totalLogSpace MB</small><br />
+										<small style=" padding-left:20px">Used Log Space: @ViewBag.usedLogSpace MB</small><br />
+										<small style=" padding-left:20px">Used Log Space in Percent: @ViewBag.usedLogPercent %</small><br />
+										<a href="#" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
 							</div>
-							<div class="row mt-4">
-								<div class="col-sm-4">
-									<div class="position-relative">
-										<img src="../../dist/img/photo1.png" alt="Photo 1" class="img-fluid">
-										<div class="ribbon-wrapper ribbon-lg">
-											<div class="ribbon bg-success text-lg">
-												Ribbon
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="position-relative">
-										<img src="../../dist/img/photo2.png" alt="Photo 2" class="img-fluid">
-										<div class="ribbon-wrapper ribbon-xl">
-											<div class="ribbon bg-warning text-lg">
-												Ribbon
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="position-relative" style="min-height: 180px;">
-										<img src="../../dist/img/photo3.jpg" alt="Photo 3" class="img-fluid">
-										<div class="ribbon-wrapper ribbon-xl">
-											<div class="ribbon bg-danger text-xl">
-												Ribbon
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							
 						</div>
 						<!-- /.card-body -->
 					</div>
