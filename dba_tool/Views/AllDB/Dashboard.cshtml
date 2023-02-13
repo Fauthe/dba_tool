@@ -1,4 +1,4 @@
-﻿@model dba_tool.Models.dbs
+﻿@model List<dba_tool.Models.databaseFiles>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -74,7 +74,7 @@
 							</div>
 							<div class="row mt-4">
 								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 170px">
+									<div class="position-relative p-3 bg-gray" style="height: 190px">
 										<div class="ribbon-wrapper ribbon-lg">
 											<div class="ribbon bg-info">
 												Database Files
@@ -83,13 +83,23 @@
 											</div>
 										</div>
 										Database Files Location <br />
-										<small style=" padding-left:20px">@ViewBag.dataFileName: @ViewBag.dataFilePath </small><br />
-										<small style=" padding-left:20px">@ViewBag.logFileName: @ViewBag.logFilePath </small><br /><br />
+										@{ 
+											if(Model != null)
+											{
+												foreach (var Data in Model) 
+												{ 
+													<small style="font-weight:bold">@Data.file_name[0]: </small> 
+													<small style="font-style:italic">" @Data.file_path[0] "</small><br/>
+												}
+											}
+										}
+										@*<small style=" padding-left:20px">@ViewBag.dataFileName: @ViewBag.dataFilePath </small><br />
+										<small style=" padding-left:20px">@ViewBag.logFileName: @ViewBag.logFilePath </small><br /><br />*@
 										<a href="#" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
 								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 170px">
+									<div class="position-relative p-3 bg-gray" style="height: 190px">
 										<div class="ribbon-wrapper ribbon-lg">
 											<div class="ribbon bg-info">
 												Log Space
@@ -100,7 +110,7 @@
 										Log Space Usage <br />
 										<small style=" padding-left:20px">Total Log Space: @ViewBag.totalLogSpace MB</small><br />
 										<small style=" padding-left:20px">Used Log Space: @ViewBag.usedLogSpace MB</small><br />
-										<small style=" padding-left:20px">Used Log Space in Percent: @ViewBag.usedLogPercent %</small><br />
+										<small style=" padding-left:20px">Used Log Space in Percent: @ViewBag.usedLogPercent %</small><br /><br />
 										<a href="#" class="btn btn-primary">More Details</a>
 									</div>
 								</div>

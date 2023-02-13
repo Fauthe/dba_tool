@@ -4,6 +4,9 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Data;
 using System.Drawing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore;
+using System.Web;
 
 namespace dba_tool.Controllers
 {
@@ -25,7 +28,6 @@ namespace dba_tool.Controllers
 
 		public IActionResult Index()
 		{
-			
 			FetchData();
 			
 			return View(dbss);
@@ -43,6 +45,7 @@ namespace dba_tool.Controllers
 
 		public IActionResult Dashboard(string selectedDB)
 		{
+
 			ViewBag.SelectedDB = selectedDB;
 			ViewBag.tableCount = GetTableCount(selectedDB);
 			ViewBag.viewCount = GetViewsCount(selectedDB);
@@ -56,17 +59,10 @@ namespace dba_tool.Controllers
 			}
 
 			FetchDBFileLocations(selectedDB);
-			foreach (var item in df)
-			{
-					ViewBag.dataFileName = item.file_name[0];
-					ViewBag.dataFilePath = item.file_path[0];
-					ViewBag.logFileName = item.file_name;
-					ViewBag.logFilePath = item.file_path;
-			}
 
 
 
-				return View();
+				return View(df);
 		}
 
 		public IActionResult DiskUsage()
