@@ -11,6 +11,8 @@ namespace dba_tool
 		//{
 		//	try
 		//	{
+		//	Home = DESKTOP-6759IBQ
+		//	Office = DESKTOP-FM5935J\NODE1
 		//		String connectionString = "Data Source=DESKTOP-FM5935J\\TESTNODE; Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
 		//		using (SqlConnection connection = new SqlConnection(connectionString))
@@ -28,7 +30,7 @@ namespace dba_tool
 		public static SqlConnection DBConnect()
 		{
 			var conn = new SqlConnection();
-			conn.ConnectionString = "Data Source=DESKTOP-6759IBQ; Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+			conn.ConnectionString = "Data Source=DESKTOP-FM5935J\\NODE1; Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 			if (conn.State != ConnectionState.Open)
 			{
 				conn.Open();

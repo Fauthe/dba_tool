@@ -82,8 +82,9 @@
 
 											</div>
 										</div>
-										Database Files Location <br /><br />
-										<h6 style=" padding-left:20px">.ribbon-wrapper.ribbon-lg .ribbon</h6><br />
+										Database Files Location <br />
+										<small style=" padding-left:20px">@ViewBag.dataFileName: @ViewBag.dataFilePath </small><br />
+										<small style=" padding-left:20px">@ViewBag.logFileName: @ViewBag.logFilePath </small><br /><br />
 										<a href="#" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
@@ -96,8 +97,10 @@
 
 											</div>
 										</div>
-										Log Space Usage <br /><br />
-										<h6 style=" padding-left:20px">.ribbon-wrapper.ribbon-lg .ribbon</h6><br />
+										Log Space Usage <br />
+										<small style=" padding-left:20px">Total Log Space: @ViewBag.totalLogSpace MB</small><br />
+										<small style=" padding-left:20px">Used Log Space: @ViewBag.usedLogSpace MB</small><br />
+										<small style=" padding-left:20px">Used Log Space in Percent: @ViewBag.usedLogPercent %</small><br />
 										<a href="#" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
