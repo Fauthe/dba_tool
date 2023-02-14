@@ -47,6 +47,8 @@ namespace dba_tool.Controllers
 		{
 
 			ViewBag.SelectedDB = selectedDB;
+			ViewData["selecteddb"] = selectedDB; 
+			//string database = ViewData["selecteddb"].ToString();
 			ViewBag.tableCount = GetTableCount(selectedDB);
 			ViewBag.viewCount = GetViewsCount(selectedDB);
 			ViewBag.indexCount = GetIndexesCount(selectedDB);
