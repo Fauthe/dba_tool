@@ -9,6 +9,8 @@ namespace dba_tool.Controllers
 	public class MoreDetailController : Controller
 	{
 		SqlDataReader dr;
+		List<IndexPhysicalStat> stat = new List<IndexPhysicalStat>();
+		IndexPhysicalStat stats = new IndexPhysicalStat();
 		public IActionResult Index()
 		{
 			return View();
@@ -16,14 +18,15 @@ namespace dba_tool.Controllers
 
 		public IActionResult MoreIndex()
 		{
-
-
-			return View();
+			var db_name = HttpContext.Session.GetString("selecteddb");
+			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
+			GetIndexDetails(db_name);
+			return View(stat);
 		}
 
-		public string GetIndexDetails(string dbname)
+		public IndexPhysicalStat GetIndexDetails(string dbname)
 		{
-			string result = "";
+			//string result = "";
 			try
 			{
 				SqlCommand cmd = new SqlCommand("udp_getIndexPhysicalStat");
@@ -33,9 +36,15 @@ namespace dba_tool.Controllers
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
-
+					stat.Add(new IndexPhysicalStat()
+					{
+						schema_name = dr["Schema_Name"].ToString(),
+						object_name = dr["Object_Name"].ToString(),
+						index_name = dr["Index_Name"].ToString(),
+						avg_fragmentation_percent = Convert.ToDouble(dr["Avg_Fragmentation_Percent"])
+					});
 				}
-					return result;
+					return stats;
 
 			}
 			catch (Exception ex)
