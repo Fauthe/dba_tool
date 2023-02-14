@@ -1,5 +1,7 @@
 ﻿@model List<dba_tool.Models.databaseFiles>
 <!-- Content Wrapper. Contains page content -->
+
+
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
@@ -32,7 +34,7 @@
 						<div class="card-body">
 							<div class="row">
 								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 170px">
+									<div class="position-relative p-3 bg-gray" style="height: 160px">
 										<div class="ribbon-wrapper ribbon-lg">
 											<div class="ribbon bg-info">
 												Tables
@@ -41,12 +43,12 @@
 											</div>
 										</div>
 										Total Number of Tables <br /><br />
-										<h6 style=" padding-left:20px">@ViewBag.tableCount</h6><br />
+										<h6 style=" padding-left: 20px; font-style: italic">@ViewBag.tableCount</h6><br />
 										<a href="#" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
 								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 170px">
+									<div class="position-relative p-3 bg-gray" style="height: 160px">
 										<div class="ribbon-wrapper ribbon-lg">
 											<div class="ribbon bg-info">
 												Views
@@ -55,26 +57,26 @@
 											</div>
 										</div>
 										Total Number of Views <br /><br />
-										<h6 style=" padding-left:20px">@ViewBag.viewCount</h6><br />
+										<h6 style=" padding-left: 20px; font-style: italic">@ViewBag.viewCount</h6><br />
 										<a href="#" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
 								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 170px">
+									<div class="position-relative p-3 bg-gray" style="height: 160px">
 										<div class="ribbon-wrapper ribbon-lg">
 											<div class="ribbon bg-secondary">
 												Indexes
 											</div>
 										</div>
 										Total Number of Indexes <br /><br />
-										<h6 style="padding-left: 20px">@ViewBag.indexCount</h6><br />
-										<a href="#" class="btn btn-primary">More Details</a>
+										<h6 style="padding-left: 20px; font-style: italic">@ViewBag.indexCount</h6><br />
+										<a href="https://localhost:7065/MoreDetail/MoreIndex" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
 							</div>
 							<div class="row mt-4">
 								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 190px">
+									<div class="position-relative p-3 bg-gray" style="height: 200px">
 										<div class="ribbon-wrapper ribbon-lg">
 											<div class="ribbon bg-info">
 												Database Files
@@ -83,23 +85,21 @@
 											</div>
 										</div>
 										Database Files Location <br />
-										@{ 
-											if(Model != null)
+										@{
+											if (Model != null)
 											{
-												foreach (var Data in Model) 
-												{ 
-													<small style="font-weight:bold">@Data.file_name[0]: </small> 
-													<small style="font-style:italic">" @Data.file_path[0] "</small><br/>
+												foreach (var Data in Model)
+												{
+													<small style="font-weight:bold">@Data.file_name[0]: </small>
+													<small style="font-style:italic">" @Data.file_path[0] "</small><br />
 												}
 											}
 										}
-										@*<small style=" padding-left:20px">@ViewBag.dataFileName: @ViewBag.dataFilePath </small><br />
-										<small style=" padding-left:20px">@ViewBag.logFileName: @ViewBag.logFilePath </small><br /><br />*@
 										<a href="#" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
 								<div class="col-sm-4">
-									<div class="position-relative p-3 bg-gray" style="height: 190px">
+									<div class="position-relative p-3 bg-gray" style="height: 200px">
 										<div class="ribbon-wrapper ribbon-lg">
 											<div class="ribbon bg-info">
 												Log Space
@@ -108,14 +108,14 @@
 											</div>
 										</div>
 										Log Space Usage <br />
-										<small style=" padding-left:20px">Total Log Space: @ViewBag.totalLogSpace MB</small><br />
-										<small style=" padding-left:20px">Used Log Space: @ViewBag.usedLogSpace MB</small><br />
-										<small style=" padding-left:20px">Used Log Space in Percent: @ViewBag.usedLogPercent %</small><br /><br />
+										<small style=" padding-left:20px; font-weight:bold">Total Log Space:</small><small style="font-style: italic"> @ViewBag.totalLogSpace MB</small><br />
+										<small style=" padding-left: 20px; font-weight: bold">Used Log Space:</small><small style="font-style: italic"> @ViewBag.usedLogSpace MB</small><br />
+										<small style=" padding-left: 20px; font-weight: bold">Used Log Space in Percent:</small><small style="font-style: italic"> @ViewBag.usedLogPercent %</small><br /><br />
 										<a href="#" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
 							</div>
-							
+
 						</div>
 						<!-- /.card-body -->
 					</div>
