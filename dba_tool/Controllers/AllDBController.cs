@@ -7,6 +7,10 @@ using System.Drawing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore;
 using System.Web;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+//using System.Web.Providers.Entities;
+//using System.Web.Providers.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace dba_tool.Controllers
 {
@@ -45,9 +49,9 @@ namespace dba_tool.Controllers
 
 		public IActionResult Dashboard(string selectedDB)
 		{
-
+			HttpContext.Session.SetString("selecteddb", selectedDB);
 			ViewBag.SelectedDB = selectedDB;
-			ViewData["selecteddb"] = selectedDB; 
+			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
 			//string database = ViewData["selecteddb"].ToString();
 			ViewBag.tableCount = GetTableCount(selectedDB);
 			ViewBag.viewCount = GetViewsCount(selectedDB);
@@ -61,8 +65,6 @@ namespace dba_tool.Controllers
 			}
 
 			FetchDBFileLocations(selectedDB);
-
-
 
 				return View(df);
 		}
@@ -78,6 +80,7 @@ namespace dba_tool.Controllers
 		{
 			try
 			{
+				
 				string sql = "Select name from sys.databases where database_id > 4;";
 				dr = DBconnection.ExecuteQuery(sql);
 				while (dr.Read())
