@@ -1,7 +1,6 @@
 ﻿@model List<dba_tool.Models.ServerOverall>
-@{
-	if (Model != null)
-	{
+
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -28,7 +27,7 @@
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							<h3 class="card-title">Details on Server Overall</h3>
+							<h3 class="card-title">Details on CPU Utilization</h3>
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
@@ -37,8 +36,7 @@
 									<tr>
 										<th>Event Time</th>
 										<th>SQL Process Utilization</th>
-										<th>System Idle
-										<th>
+										<th>System Idle</th>
 										<th>Other Process Utilization</th>
 										<th>Load Date</th>
 
@@ -46,22 +44,30 @@
 								</thead>
 								<tbody>
 									@{
-										//if (Model != null)
-										//{
-										foreach (var item in Model)
+										if (Model != null)
 										{
-												<tr>
-													<td>@item.eventTime</td>
-													<td>@item.sqlprocessutilization</td>
-													<td>@item.systemIdel</td>
-													<td>@item.otherProcessUtilization</td>
-													<td>@item.loadDate</td>
+											foreach (var item in Model)
+											{
 
 
-												</tr>
-											//}
+												foreach (var x in item.CPUUsages)
+												{
+													<tr>
+														<td>@x.eventTime</td>
+														<td>@x.sqlprocessutilization</td>
+														<td>@x.systemIdel</td>
+														<td>@x.otherProcessUtilization</td>
+														<td>@x.loadDate</td>
+													</tr>
+
+												}
+											}
+
+
+
 										}
 									}
+									
 
 								</tbody>
 							</table>
@@ -83,24 +89,7 @@
 </div>
 
 
-
 <div class="content-wrapper">
-	<!-- Content Header (Page header) -->
-	<section class="content-header">
-		<div class="container-fluid">
-			<div class="row mb-2">
-				<div class="col-sm-6">
-					<h1>Database Files</h1>
-				</div>
-				<div class="col-sm-6">
-					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Database Files</li>
-					</ol>
-				</div>
-			</div>
-		</div><!-- /.container-fluid -->
-	</section>
 
 	<!-- Main content -->
 	<section class="content">
@@ -109,7 +98,7 @@
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							<h3 class="card-title">Details on Database Files</h3>
+							<h3 class="card-title">Details on TempDB</h3>
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
@@ -127,21 +116,26 @@
 								</thead>
 								<tbody>
 									@{
-										//if (Model != null)
-										//{
-										foreach (var item in Model)
+										if (Model != null)
 										{
-												<tr>
-													<td>@item.serverName.ToString()</td>
-													<td>@item.dbName.ToString()</td>
-													<td>@item.fileName.ToString()</td>
-													<td>@item.filePath.ToString()</td>
-													<td>@item.fileSize</td>
-													<td>@item.availableSpace</td>
-													<td>@item.percentFull</td>
+											foreach (var item in Model)
+											{
+												foreach (var x in item.TempDBUs)
+												{
+																		<tr>
+																			<td>@x.serverName</td>
+																			<td>@x.dbName</td>
+																			<td>@x.fileName</td>
+																			<td>@x.filePath</td>
+																			<td>@x.fileSize</td>
+																			<td>@x.availableSpace</td>
+																			<td>@x.percentFull</td>
 
-												</tr>
-											//}
+																		</tr>
+												}
+
+
+											}
 										}
 									}
 
@@ -163,8 +157,9 @@
 	</section>
 	<!-- /.content -->
 </div>
-											}
-										}
+
+
+
 
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
