@@ -165,9 +165,12 @@ namespace dba_tool.Controllers
 			
 			try
 			{
-				string sql = "use " + dbname + "; select database_id, total_log_size_in_bytes, used_log_space_in_bytes, used_log_space_in_percent" +
-					"   from sys.dm_db_log_space_usage";
-				dr = DBconnection.ExecuteQuery(sql);
+
+				SqlCommand cmd = new SqlCommand("udp_FetchLogUsage");
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@dbname", dbname);
+				cmd.Connection = DBconnection.DBConnect();
+				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
 					ls.Add(new logSpace()
@@ -195,9 +198,11 @@ namespace dba_tool.Controllers
 
 			try
 			{
-				string sql = "use " + dbname + "; select name, physical_name" +
-					"   from sys.database_files";
-				dr = DBconnection.ExecuteQuery(sql);
+				SqlCommand cmd = new SqlCommand("udp_FetchDBFileLocations");
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@dbname", dbname);
+				cmd.Connection = DBconnection.DBConnect();
+				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
 					df.Add(new databaseFiles()
