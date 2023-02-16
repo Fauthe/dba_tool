@@ -17,6 +17,7 @@ namespace dba_tool.Controllers
 	public class AllDBController : Controller
 	{
 		List<dbs> dbss = new List<dbs>();
+		List<dbs> dbss1 = new List<dbs>();
 		List<logSpace> ls = new List<logSpace>();
 		List<databaseFiles> df= new List<databaseFiles>();
 		SqlDataReader dr;
@@ -43,13 +44,19 @@ namespace dba_tool.Controllers
 		{
 
 
-			//tempdata.add("cdb",strddlvalue);
+			return RedirectToAction("Dashboard");
+		}
+
+		public IActionResult Temp_Dashboard()
+		{
+			//ViewData["sessionDB"] = HttpContext.Session.GetString("selecteddb");
 			return RedirectToAction("Dashboard");
 		}
 
 		public IActionResult Dashboard(string selectedDB)
 		{
 			HttpContext.Session.SetString("selecteddb", selectedDB);
+
 			ViewBag.SelectedDB = selectedDB;
 			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
 			//string database = ViewData["selecteddb"].ToString();
@@ -68,6 +75,12 @@ namespace dba_tool.Controllers
 
 				return View(df);
 		}
+
+		public IActionResult Snapshot()
+		{
+			return View();
+		}
+
 
 		public IActionResult DiskUsage()
 		{

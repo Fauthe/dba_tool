@@ -18,6 +18,9 @@ namespace dba_tool.Controllers
 		List<ServerOverall> server = new List<ServerOverall>();
 		ServerOverall servers = new ServerOverall();
 
+		List<Backups> backup = new List<Backups>();
+		Backups backups = new Backups();
+
 		public IActionResult Index()
 		{
 			return View();
@@ -35,6 +38,14 @@ namespace dba_tool.Controllers
 				TempDBUs = tdb
 			});
 			return View(server);
+		}
+
+		public IActionResult BackupDetails()
+		{
+
+			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
+			getBackupReport();
+			return View(backup);
 		}
 
 		public TempDBUsage getTempDbReport()
@@ -95,5 +106,34 @@ namespace dba_tool.Controllers
 
 			}
 		}
-	}
+		public Backups getBackupReport()
+		{
+			try
+			{
+				SqlCommand cmd = new SqlCommand("udp_getBackupsDetails");
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Connection = DBconnection.DBConnect();
+				dr = cmd.ExecuteReader();
+				while (dr.Read())
+				{
+					backup.Add(new Backups()
+					{
+						dbname = dr["name"].ToString(),
+						last_backup_time = dr["last_backup_time"].ToString(),
+						recovery_model = dr["recovery_model_desc"].ToString(),
+						state = dr["state_desc"].ToString(),
+						backup_type = dr["backup_type"].ToString(),
+						backup_file_location = dr["physical_device_name"].ToString()
+					}); ;
+				}
+				return backups;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+
+			}
+		}
+		}
 }

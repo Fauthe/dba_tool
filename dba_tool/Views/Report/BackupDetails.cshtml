@@ -1,4 +1,4 @@
-﻿@model List<dba_tool.Models.databaseFiles>
+﻿@model List<dba_tool.Models.Backups>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -6,12 +6,12 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Database Files</h1>
+					<h1>Backup Details</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Database Files</li>
+						<li class="breadcrumb-item active">Backup Details</li>
 					</ol>
 				</div>
 			</div>
@@ -25,20 +25,19 @@
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							<h3 class="card-title">Details on Database Files</h3>
+							<h3 class="card-title">Details on Backups of All Database</h3>
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
 							<table id="example2" class="table table-bordered table-hover">
 								<thead>
 									<tr>
-										<th>File Name</th>
-										<th>File Location</th>
-										<th>File Type</th>
+										<th>Database Name</th>
+										<th>Last Backup Time</th>
+										<th>Recovery Model</th>
 										<th>State</th>
-										<th>Size</th>
-										<th>Max Size</th>
-										<th>Auto Growth</th>
+										<th>Backup Type</th>
+										<th>Backup Location</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -48,13 +47,22 @@
 											foreach (var item in Model)
 											{
 																		<tr>
-																			<td>@item.name.ToString()</td>
-																			<td>@item.path.ToString()</td>
-																			<td>@item.type.ToString()</td>
+																			<td>@item.dbname.ToString()</td>
+																			<td>@item.last_backup_time.ToString()</td>
+																			<td>@item.recovery_model.ToString()</td>
 																			<td>@item.state.ToString()</td>
-																			<td>@item.size</td>
-																			<td>@item.max_size</td>
-																			<td>@item.growth</td>
+																			<td>@item.backup_type.ToString()</td>
+																			@{
+if (item.backup_type == "Unknown")
+					{
+						<td style="color:red">Backup Has Not Been Taken Yet!!!</td>
+					}
+else
+					{
+																		<td>@item.backup_file_location.ToString()</td>
+					}
+																			}
+																			
 
 																		</tr>
 											}
@@ -67,7 +75,6 @@
 						<!-- /.card-body -->
 					</div>
 					<!-- /.card -->
-					
 					<!-- /.card-body -->
 					<!--</div>-->
 					<!-- /.card -->
@@ -82,9 +89,9 @@
 </div>
 
 <!-- jQuery -->
-<script src="~/theme/plugins/jquery/jquery.min.js"></script>
+<script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="~/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="~/theme/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="~/theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
