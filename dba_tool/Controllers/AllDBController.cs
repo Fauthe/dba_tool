@@ -11,19 +11,27 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 //using System.Web.Providers.Entities;
 //using System.Web.Providers.Entities;
 using Microsoft.AspNetCore.Http;
+using System.Xml.Linq;
 
 namespace dba_tool.Controllers
 {
 	public class AllDBController : Controller
 	{
-		List<dbs> dbss = new List<dbs>();
-		List<dbs> dbss1 = new List<dbs>();
-		List<logSpace> ls = new List<logSpace>();
-		List<databaseFiles> df= new List<databaseFiles>();
+
 		SqlDataReader dr;
 		DBconnection db;
+
+		List<dbs> dbss = new List<dbs>();
+
+		List<logSpace> ls = new List<logSpace>();
 		logSpace lsp = new logSpace();
+
+		List<databaseFiles> df= new List<databaseFiles>();
 		databaseFiles dfs = new databaseFiles();
+
+		List<SnapshotDetails> snapshot = new List<SnapshotDetails>();
+		SnapshotDetails snapshots = new SnapshotDetails();
+		
 		private readonly ILogger<AllDBController> _logger;
 
 		public AllDBController(ILogger<AllDBController> logger)
@@ -47,10 +55,23 @@ namespace dba_tool.Controllers
 			return RedirectToAction("Dashboard");
 		}
 
-		public IActionResult Temp_Dashboard()
+		public IActionResult TempDashboard()
 		{
-			//ViewData["sessionDB"] = HttpContext.Session.GetString("selecteddb");
-			return RedirectToAction("Dashboard");
+			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
+			ViewData["sessionDB"] = HttpContext.Session.GetString("selecteddb");
+			ViewBag.tableCount = GetTableCount(ViewData["sessionDB"].ToString());
+			ViewBag.viewCount = GetViewsCount(ViewData["sessionDB"].ToString());
+			ViewBag.indexCount = GetIndexesCount(ViewData["sessionDB"].ToString());
+			FetchLogUsage(ViewData["sessionDB"].ToString());
+			foreach (var item in ls)
+			{
+				ViewBag.totalLogSpace = item.total_size / 1024;
+				ViewBag.usedLogSpace = item.used_size / 1024;
+				ViewBag.usedLogPercent = item.used_percent;
+			}
+
+			FetchDBFileLocations(ViewData["sessionDB"].ToString());
+			return View(df);
 		}
 
 		public IActionResult Dashboard(string selectedDB)
@@ -78,9 +99,18 @@ namespace dba_tool.Controllers
 
 		public IActionResult Snapshot()
 		{
+			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
 			return View();
 		}
 
+		[HttpPost]
+		public IActionResult Snapshot(SnapshotDetails snapshots)
+		{
+			
+			return Redirect("https://localhost:7065/report/Snap");
+		}
+
+		
 
 		public IActionResult DiskUsage()
 		{
@@ -235,5 +265,9 @@ namespace dba_tool.Controllers
 
 			}
 		}
+
+
+		
+		
 	}
 }
