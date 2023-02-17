@@ -38,6 +38,7 @@
 										<th>State</th>
 										<th>Snapshot Isolation State</th>
 										<th>Recovery Model</th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -53,6 +54,7 @@
 																			<td>@item.state.ToString()</td>
 																			<td>@item.snapshot_isolation_status.ToString()</td>
 																			<td>@item.recovery_model.ToString()</td>
+																			<td><a href="/report/deletesnap/?snapname=@item.snapname"><i class="fa-trash"></i></a></td>
 
 
 																		</tr>

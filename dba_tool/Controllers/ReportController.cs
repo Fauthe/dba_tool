@@ -59,11 +59,37 @@ namespace dba_tool.Controllers
 			return View(snapshot);
 		}
 
-		public IActionResult Snap(string database, string snapshot)
+		public async Task<IActionResult> Snap(string database, string snapshot)
 		{
 			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
 			createSnapshot(database, snapshot);
+			await Task.Delay(1000);
+			return RedirectToAction("SnapshotDetails");
+		}
+
+		public IActionResult DeleteSnap(string snapname)
+		{
+			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
+			ViewBag.SelectedSnap = snapname;
+			return View();
+		}
+
+		[HttpPost]
+		public IActionResult DeleteSnap(SnapshotDetails snapshots)
+		{
+			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
+			return RedirectToAction("Temp_SnapshotDetails");
+		}
+
+		public async Task<IActionResult> Temp_SnapshotDetails(string database)
+		{
+			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
+			await Task.Delay(1000);
+			drop_snapshot(database);
+			
+
+
 			return RedirectToAction("SnapshotDetails");
 		}
 
@@ -198,6 +224,21 @@ namespace dba_tool.Controllers
 					});
 				}
 				return snapshots;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+
+			}
+		}
+
+		public void drop_snapshot(string snap_name)
+		{
+			try
+			{
+				string sql = $"Use master; Drop Database {snap_name};";
+				DBconnection.ExecuteNonQuery(sql);
 
 			}
 			catch (Exception ex)
