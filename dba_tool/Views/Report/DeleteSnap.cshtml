@@ -1,0 +1,243 @@
+﻿
+@model List<dba_tool.Models.SnapshotDetails>
+	<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Delete Snapshot</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="#">Home</a></li>
+						<li class="breadcrumb-item active">Delete Snapshot</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+	</section>
+
+	<!-- Main content -->
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<!-- left column -->
+				<div class="col-md-6">
+					<!-- general form elements -->
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">Delete Snapshot</h3>
+						</div>
+						<!-- /.card-header -->
+						<!-- form start -->
+						<form action="https://localhost:7065/report/Temp_SnapshotDetails" method="post">
+							<div class="card-body">
+								<div class="form-group">
+									<label for="exampleInputEmail1">Snapshot Name</label>
+									<input type="text" class="form-control" id="exampleInputEmail1" value="@ViewBag.SelectedSnap" readonly name="database">
+								</div>
+							</div>
+							<!-- /.card-body -->
+
+							<div class="card-footer">
+								<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Delete</button>
+							</div>
+						</form>
+						<div class="modal fade" id="modal-default">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Success!!!</h4>
+										<label type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</label>
+									</div>
+									<div class="modal-body">
+										<p>Snapshot Deleted Successfully&hellip;</p>
+									</div>
+									<div class="modal-footer justify-content-between">
+										<label type="button" class="btn btn-default" data-dismiss="modal">Close</label>
+									
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+					</div>
+					<!-- /.card -->
+					<!-- general form elements -->
+					<!-- /.card -->
+
+				</div>
+				<!-- /.row -->
+			</div><!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- jQuery -->
+<script src="~/theme/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- bs-custom-file-input -->
+<script src="~/theme/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/theme/dist/js/adminlte.min.js"></script>
+<!-- Page specific script -->
+@*<script>
+		$(function () {
+			var Toast = Swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000
+			});
+
+			$('.swalDefaultSuccess').click(function () {
+				Toast.fire({
+					icon: 'success',
+					title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.swalDefaultInfo').click(function () {
+				Toast.fire({
+					icon: 'info',
+					title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.swalDefaultError').click(function () {
+				Toast.fire({
+					icon: 'error',
+					title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.swalDefaultWarning').click(function () {
+				Toast.fire({
+					icon: 'warning',
+					title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.swalDefaultQuestion').click(function () {
+				Toast.fire({
+					icon: 'question',
+					title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+
+			$('.toastrDefaultSuccess').click(function () {
+				toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+			});
+			$('.toastrDefaultInfo').click(function () {
+				toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+			});
+			$('.toastrDefaultError').click(function () {
+				toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+			});
+			$('.toastrDefaultWarning').click(function () {
+				toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+			});
+
+			$('.toastsDefaultDefault').click(function () {
+				$(document).Toasts('create', {
+					title: 'Toast Title',
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.toastsDefaultTopLeft').click(function () {
+				$(document).Toasts('create', {
+					title: 'Toast Title',
+					position: 'topLeft',
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.toastsDefaultBottomRight').click(function () {
+				$(document).Toasts('create', {
+					title: 'Toast Title',
+					position: 'bottomRight',
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.toastsDefaultBottomLeft').click(function () {
+				$(document).Toasts('create', {
+					title: 'Toast Title',
+					position: 'bottomLeft',
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.toastsDefaultAutohide').click(function () {
+				$(document).Toasts('create', {
+					title: 'Toast Title',
+					autohide: true,
+					delay: 750,
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.toastsDefaultNotFixed').click(function () {
+				$(document).Toasts('create', {
+					title: 'Toast Title',
+					fixed: false,
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.toastsDefaultFull').click(function () {
+				$(document).Toasts('create', {
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
+					title: 'Toast Title',
+					subtitle: 'Subtitle',
+					icon: 'fas fa-envelope fa-lg',
+				})
+			});
+			$('.toastsDefaultFullImage').click(function () {
+				$(document).Toasts('create', {
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
+					title: 'Toast Title',
+					subtitle: 'Subtitle',
+					image: '../../dist/img/user3-128x128.jpg',
+					imageAlt: 'User Picture',
+				})
+			});
+			$('.toastsDefaultSuccess').click(function () {
+				$(document).Toasts('create', {
+					class: 'bg-success',
+					title: 'Toast Title',
+					subtitle: 'Subtitle',
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.toastsDefaultInfo').click(function () {
+				$(document).Toasts('create', {
+					class: 'bg-info',
+					title: 'Toast Title',
+					subtitle: 'Subtitle',
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.toastsDefaultWarning').click(function () {
+				$(document).Toasts('create', {
+					class: 'bg-warning',
+					title: 'Toast Title',
+					subtitle: 'Subtitle',
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.toastsDefaultDanger').click(function () {
+				$(document).Toasts('create', {
+					class: 'bg-danger',
+					title: 'Toast Title',
+					subtitle: 'Subtitle',
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+			$('.toastsDefaultMaroon').click(function () {
+				$(document).Toasts('create', {
+					class: 'bg-maroon',
+					title: 'Toast Title',
+					subtitle: 'Subtitle',
+					body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+				})
+			});
+		});
+	</script>*@
