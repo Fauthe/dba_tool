@@ -1,6 +1,7 @@
 ﻿@{
-	ViewData["Title"] = "Take Snapshot";
+	ViewData["Title"] = "Transactional Backup";
 }
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -8,12 +9,12 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Snapshot</h1>
+					<h1>Transactional Backup</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Snapshot</li>
+						<li class="breadcrumb-item active">Transactional Backup</li>
 					</ol>
 				</div>
 			</div>
@@ -29,28 +30,46 @@
 					<!-- general form elements -->
 					<div class="card card-primary">
 						<div class="card-header">
-							<h3 class="card-title">Take Snapshot</h3>
+							<h3 class="card-title">Take Transactional Backup</h3>
 						</div>
 						<!-- /.card-header -->
 						<!-- form start -->
-						<form action="~/report/Snap" method="post">
+						<form action="~/backup/CheckFullBackupForTran" method="post">
 							<div class="card-body">
 								<div class="form-group">
 									<label for="exampleInputEmail1">Database</label><label style="color:red"> *</label>
-									<input type="text" class="form-control" id="exampleInputEmail1" value="@ViewBag.SelectedDB" readonly name="database">
+									@{
+										if (Model != null)
+										{
+											<select class="form-control" aria-label="Default select example" name="selectedDB">
+
+												<option selected>Select Database</option>
+												@{
+													foreach (var Data in Model)
+													{
+														<option>
+															@Data.Name
+														</option>
+													}
+												}
+
+											</select>
+										}
+									}
 								</div>
 								<div class="form-group">
-									<label for="exampleInputPassword1">Snapshot Name</label><label style="color:red"> *</label>
-									<input type="text" class="form-control" id="exampleInputPassword1" placeholder="Provide Snapshot Name" name="snapshot">
+									<label for="exampleInputPassword1">Backup File Name</label><label style="color:red"> *</label>
+									<input type="text" class="form-control" id="exampleInputPassword1" placeholder="Provide Backup Name" name="tranbackup">
 								</div>
 								<div class="form-group">
 									<label class="text-warning">@TempData["param"]</label>
 								</div>
+								<label for="exampleInputPassword1" style="color:red;font-style:italic">@TempData["successDet"]</label>
 							</div>
 							<!-- /.card-body -->
 
 							<div class="card-footer">
-								<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Take Snapshot</button>
+								<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Take Backup</button>
 							</div>
 						</form>
 						<div class="modal fade" id="modal-default">
@@ -63,7 +82,7 @@
 										</label>
 									</div>
 									<div class="modal-body">
-										<p>Snapshot Created Successfully&hellip;</p>
+										<p>Database Transaction Backup Successful&hellip;</p>
 									</div>
 								</div>
 								<!-- /.modal-content -->
@@ -81,7 +100,11 @@
 						<div class="col-md-6">
 
 
-							<img src="~/img/snapshot.jpg" width="400" height="360" />
+							<div class="card-header">
+
+								Backup Types
+							</div>
+							<img src="~/img/bakTypes.png" width="500" height="319" />
 
 						</div>
 					</div>

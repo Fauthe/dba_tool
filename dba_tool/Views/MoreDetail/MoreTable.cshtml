@@ -1,4 +1,8 @@
-﻿@model List<dba_tool.Models.Top20Tables>
+﻿@{
+	ViewData["Title"] = "Tables Details";
+}
+
+@model List<dba_tool.Models.Top20Tables>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -56,9 +60,9 @@
 													<td>@item.index_size</td>
 													<td>@item.unused</td>
 
-											</tr>
+												</tr>
+											}
 										}
-									}
 									}
 
 								</tbody>
@@ -540,17 +544,17 @@
 <!-- Page specific script -->
 <script>
 	$(function () {
-			$("#example1").DataTable({
-				"responsive": true, "lengthChange": false, "autoWidth": false,
-				"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-			}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-			$('#example2').DataTable({
-				"paging": true,
-				"lengthChange": false,
-				"searching": false,
-				"ordering": true,
-				"info": true,
-				"autoWidth": false,
-				"responsive": true,
-			});
-		});</script>
+		$("#example1").DataTable({
+			"responsive": true, "lengthChange": false, "autoWidth": false,
+			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+		$('#example2').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": true,
+			"info": true,
+			"autoWidth": false,
+			"responsive": true,
+		});
+	});</script>

@@ -1,4 +1,6 @@
-﻿
+﻿@{
+	ViewData["Title"] = "Select DB";
+}
 
 
 <div class="content-wrapper">
@@ -36,34 +38,34 @@
 
 
 						<form id="quickForm" action="alldb/dashboard" method="post">
-			<div class="card-body">
-				<div class="form-group">
-					@{
-						if (Model != null)
-						{
-						<select class="form-control" aria-label="Default select example" name ="selectedDB">
+							<div class="card-body">
+								<div class="form-group">
+									@{
+										if (Model != null)
+										{
+											<select class="form-control" aria-label="Default select example" name="selectedDB">
 
-							<option selected>Select Database</option>
-															@{
-																foreach (var Data in Model)
-																{
-																	<option>
-																		@Data.Name
-																	</option>
-																	}
-																}
+												<option selected>Select Database</option>
+												@{
+													foreach (var Data in Model)
+													{
+														<option>
+															@Data.Name
+														</option>
+													}
+												}
 
-															</select>
-						}
-					}
+											</select>
+										}
+									}
+									<label class="text-warning">@TempData["params"]</label>
+								</div>
+							</div>
 
-				</div>
-			</div>
-
-			<div class="card-footer">
-				<button type="submit" class="btn btn-primary" value="selectedDB">Proceed</button>
-			</div>
-		</form>
+							<div class="card-footer">
+								<button type="submit" class="btn btn-primary" value="selectedDB">Proceed</button>
+							</div>
+						</form>
 					</div>
 					<!-- /.card -->
 				</div>

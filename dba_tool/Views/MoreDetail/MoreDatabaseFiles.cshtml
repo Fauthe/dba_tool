@@ -1,4 +1,8 @@
-﻿@model List<dba_tool.Models.databaseFiles>
+﻿@{
+	ViewData["Title"] = "Database Files";
+}
+
+@model List<dba_tool.Models.databaseFiles>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -47,16 +51,16 @@
 										{
 											foreach (var item in Model)
 											{
-																		<tr>
-																			<td>@item.name.ToString()</td>
-																			<td>@item.path.ToString()</td>
-																			<td>@item.type.ToString()</td>
-																			<td>@item.state.ToString()</td>
-																			<td>@item.size</td>
-																			<td>@item.max_size</td>
-																			<td>@item.growth</td>
+												<tr>
+													<td>@item.name.ToString()</td>
+													<td>@item.path.ToString()</td>
+													<td>@item.type.ToString()</td>
+													<td>@item.state.ToString()</td>
+													<td>@item.size</td>
+													<td>@item.max_size</td>
+													<td>@item.growth</td>
 
-																		</tr>
+												</tr>
 											}
 										}
 									}
@@ -67,7 +71,6 @@
 						<!-- /.card-body -->
 					</div>
 					<!-- /.card -->
-					
 					<!-- /.card-body -->
 					<!--</div>-->
 					<!-- /.card -->
@@ -101,17 +104,17 @@
 <!-- Page specific script -->
 <script>
 	$(function () {
-			$("#example1").DataTable({
-				"responsive": true, "lengthChange": false, "autoWidth": false,
-				"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-			}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-			$('#example2').DataTable({
-				"paging": true,
-				"lengthChange": false,
-				"searching": false,
-				"ordering": true,
-				"info": true,
-				"autoWidth": false,
-				"responsive": true,
-			});
-		});</script>
+		$("#example1").DataTable({
+			"responsive": true, "lengthChange": false, "autoWidth": false,
+			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+		$('#example2').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": true,
+			"info": true,
+			"autoWidth": false,
+			"responsive": true,
+		});
+	});</script>
