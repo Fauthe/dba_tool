@@ -1,4 +1,8 @@
-﻿@model List<dba_tool.Models.SnapshotDetails>
+﻿
+@{
+	ViewData["Title"] = "Snapshot Details";
+}
+@model List<dba_tool.Models.SnapshotDetails>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -47,17 +51,16 @@
 										{
 											foreach (var item in Model)
 											{
-																		<tr>
-																			<td>@item.snapname.ToString()</td>
-																			<td>@item.dbname.ToString()</td>
-																			<td>@item.created</td>
-																			<td>@item.state.ToString()</td>
-																			<td>@item.snapshot_isolation_status.ToString()</td>
-																			<td>@item.recovery_model.ToString()</td>
-																			<td><a href="/report/deletesnap/?snapname=@item.snapname"><i class="fa-trash"></i></a></td>
+												<tr>
+													<td>@item.snapname.ToString()</td>
+													<td>@item.dbname.ToString()</td>
+													<td>@item.created</td>
+													<td>@item.state.ToString()</td>
+													<td>@item.snapshot_isolation_status.ToString()</td>
+													<td>@item.recovery_model.ToString()</td>
+													<td><a href="/report/deletesnap/?snapname=@item.snapname"><img src="~/img/trash.png" /></a></td>
 
-
-																		</tr>
+												</tr>
 											}
 										}
 									}
@@ -82,9 +85,9 @@
 </div>
 
 <!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="~/theme/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="~/theme/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="~/theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -101,17 +104,17 @@
 <!-- Page specific script -->
 <script>
 	$(function () {
-			$("#example1").DataTable({
-				"responsive": true, "lengthChange": false, "autoWidth": false,
-				"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-			}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-			$('#example2').DataTable({
-				"paging": true,
-				"lengthChange": false,
-				"searching": false,
-				"ordering": true,
-				"info": true,
-				"autoWidth": false,
-				"responsive": true,
-			});
-		});</script>
+		$("#example1").DataTable({
+			"responsive": true, "lengthChange": false, "autoWidth": false,
+			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+		$('#example2').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": true,
+			"info": true,
+			"autoWidth": false,
+			"responsive": true,
+		});
+	});</script>

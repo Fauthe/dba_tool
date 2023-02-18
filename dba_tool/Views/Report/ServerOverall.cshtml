@@ -1,5 +1,7 @@
 ﻿@model List<dba_tool.Models.ServerOverall>
-
+@{
+	ViewData["Title"] = "Server Overall";
+}
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -67,7 +69,7 @@
 
 										}
 									}
-									
+
 
 								</tbody>
 							</table>
@@ -122,16 +124,16 @@
 											{
 												foreach (var x in item.TempDBUs)
 												{
-																		<tr>
-																			<td>@x.serverName</td>
-																			<td>@x.dbName</td>
-																			<td>@x.fileName</td>
-																			<td>@x.filePath</td>
-																			<td>@x.fileSize</td>
-																			<td>@x.availableSpace</td>
-																			<td>@x.percentFull</td>
+													<tr>
+														<td>@x.serverName</td>
+														<td>@x.dbName</td>
+														<td>@x.fileName</td>
+														<td>@x.filePath</td>
+														<td>@x.fileSize</td>
+														<td>@x.availableSpace</td>
+														<td>@x.percentFull</td>
 
-																		</tr>
+													</tr>
 												}
 
 

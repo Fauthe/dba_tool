@@ -28,6 +28,7 @@ namespace dba_tool.Controllers
 		public IActionResult MoreIndex()
 		{
 			var db_name = HttpContext.Session.GetString("selecteddb");
+			ViewBag.SelectedDB = db_name;
 			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
 			GetIndexDetails(db_name);
 			return View(stat);

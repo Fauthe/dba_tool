@@ -1,5 +1,5 @@
 ﻿@{
-	ViewData["Title"] = "Delete Snapshot";
+	ViewData["Title"] = "Reorganize Index";
 }
 @model List<dba_tool.Models.SnapshotDetails>
 	<!-- Content Wrapper. Contains page content -->
@@ -9,12 +9,12 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Delete Snapshot</h1>
+					<h1>Reorganize Index</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Delete Snapshot</li>
+						<li class="breadcrumb-item active">Reorganize Index</li>
 					</ol>
 				</div>
 			</div>
@@ -30,21 +30,33 @@
 					<!-- general form elements -->
 					<div class="card card-primary">
 						<div class="card-header">
-							<h3 class="card-title">Delete Snapshot</h3>
+							<h3 class="card-title">Reorganize Index</h3>
 						</div>
 						<!-- /.card-header -->
 						<!-- form start -->
-						<form action="~/report/Temp_SnapshotDetails" method="post">
+						<form action="~/IndexFixing/IndexFix" method="post">
 							<div class="card-body">
 								<div class="form-group">
-									<label for="exampleInputEmail1">Snapshot Name</label>
-									<input type="text" class="form-control" id="exampleInputEmail1" value="@ViewBag.SelectedSnap" readonly name="database">
+									<label for="exampleInputEmail1">Database</label>
+									<input type="text" class="form-control" id="exampleInputEmail1" value="@ViewBag.dbname" readonly name="name">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Index Name</label>
+									<input type="text" class="form-control" id="exampleInputEmail1" value="@ViewBag.indexName" readonly name="index">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Schema Name</label>
+									<input type="text" class="form-control" id="exampleInputEmail1" value="@ViewBag.schemaName" readonly name="schema">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Table Name</label>
+									<input type="text" class="form-control" id="exampleInputEmail1" value="@ViewBag.tableName" readonly name="table">
 								</div>
 							</div>
 							<!-- /.card-body -->
 
 							<div class="card-footer">
-								<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Delete</button>
+								<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Reorganize</button>
 							</div>
 						</form>
 						<div class="modal fade" id="modal-default">
@@ -57,7 +69,7 @@
 										</label>
 									</div>
 									<div class="modal-body">
-										<p>Snapshot Deleted Successfully&hellip;</p>
+										<p>Index Reogranize Successful&hellip;</p>
 									</div>
 									<div class="modal-footer justify-content-between">
 										<label type="button" class="btn btn-default" data-dismiss="modal">Close</label>

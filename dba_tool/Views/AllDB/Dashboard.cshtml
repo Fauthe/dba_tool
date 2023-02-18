@@ -1,8 +1,11 @@
 ﻿@model List<dba_tool.Models.databaseFiles>
 <!-- Content Wrapper. Contains page content -->
+@{
+	ViewData["Title"] = "Dashboard";
+} 
 
 
-<div class="content-wrapper">
+  <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<div class="container-fluid">
@@ -44,7 +47,7 @@
 										</div>
 										Total Number of Tables <br /><br />
 										<h6 style=" padding-left: 20px; font-style: italic">@ViewBag.tableCount</h6><br />
-										<a href="https://localhost:7065/MoreDetail/MoreTable" class="btn btn-primary">More Details</a>
+										<a href="~/MoreDetail/MoreTable" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
 								<div class="col-sm-4">
@@ -70,12 +73,12 @@
 										</div>
 										Total Number of Indexes <br /><br />
 										<h6 style="padding-left: 20px; font-style: italic">@ViewBag.indexCount</h6><br />
-										<a href="https://localhost:7065/MoreDetail/MoreIndex" class="btn btn-primary">More Details</a>
+										<a href="~/MoreDetail/MoreIndex" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
-							</div>
-							<div class="row mt-4">
-								<div class="col-sm-4">
+							</div><br>
+							<div class="row mt-12">
+								<div class="col-sm-8">
 									<div class="position-relative p-3 bg-gray" style="height: 200px">
 										<div class="ribbon-wrapper ribbon-lg">
 											<div class="ribbon bg-info">
@@ -94,8 +97,8 @@
 													<small style="font-style:italic">" @Data.file_path[0] "</small><br />
 												}
 											}
-										}
-										<a href="https://localhost:7065/MoreDetail/MoreDatabaseFiles" class="btn btn-primary">More Details</a>
+										}<br /><br />
+										<a href="~/MoreDetail/MoreDatabaseFiles" class="btn btn-primary">More Details</a>
 									</div>
 								</div>
 								<div class="col-sm-4">

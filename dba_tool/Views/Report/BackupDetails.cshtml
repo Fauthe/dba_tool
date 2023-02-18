@@ -1,4 +1,8 @@
-﻿@model List<dba_tool.Models.Backups>
+﻿@{
+	ViewData["Title"] = "Backup Details";
+}
+
+@model List<dba_tool.Models.Backups>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -46,25 +50,25 @@
 										{
 											foreach (var item in Model)
 											{
-																		<tr>
-																			<td>@item.dbname.ToString()</td>
-																			<td>@item.last_backup_time.ToString()</td>
-																			<td>@item.recovery_model.ToString()</td>
-																			<td>@item.state.ToString()</td>
-																			<td>@item.backup_type.ToString()</td>
-																			@{
-if (item.backup_type == "Unknown")
-					{
-						<td style="color:red">Backup Has Not Been Taken Yet!!!</td>
-					}
-else
-					{
-																		<td>@item.backup_file_location.ToString()</td>
-					}
-																			}
-																			
+												<tr>
+													<td>@item.dbname.ToString()</td>
+													<td>@item.last_backup_time.ToString()</td>
+													<td>@item.recovery_model.ToString()</td>
+													<td>@item.state.ToString()</td>
+													<td>@item.backup_type.ToString()</td>
+													@{
+														if (item.backup_type == "Unknown")
+														{
+															<td style="color:red">Backup Has Not Been Taken Yet!!!</td>
+														}
+														else
+														{
+															<td>@item.backup_file_location.ToString()</td>
+														}
+													}
 
-																		</tr>
+
+												</tr>
 											}
 										}
 									}
@@ -89,9 +93,9 @@ else
 </div>
 
 <!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="~/theme/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="~/theme/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="~/theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -108,17 +112,17 @@ else
 <!-- Page specific script -->
 <script>
 	$(function () {
-			$("#example1").DataTable({
-				"responsive": true, "lengthChange": false, "autoWidth": false,
-				"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-			}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-			$('#example2').DataTable({
-				"paging": true,
-				"lengthChange": false,
-				"searching": false,
-				"ordering": true,
-				"info": true,
-				"autoWidth": false,
-				"responsive": true,
-			});
-		});</script>
+		$("#example1").DataTable({
+			"responsive": true, "lengthChange": false, "autoWidth": false,
+			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+		$('#example2').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": true,
+			"info": true,
+			"autoWidth": false,
+			"responsive": true,
+		});
+	});</script>

@@ -79,22 +79,31 @@ namespace dba_tool.Controllers
 			HttpContext.Session.SetString("selecteddb", selectedDB);
 
 			ViewBag.SelectedDB = selectedDB;
-			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
-			//string database = ViewData["selecteddb"].ToString();
-			ViewBag.tableCount = GetTableCount(selectedDB);
-			ViewBag.viewCount = GetViewsCount(selectedDB);
-			ViewBag.indexCount = GetIndexesCount(selectedDB);
-			FetchLogUsage(selectedDB);
-			foreach(var item in ls)
+			if(selectedDB == "Select Database" || selectedDB==null)
 			{
-				ViewBag.totalLogSpace = item.total_size/1024;
-				ViewBag.usedLogSpace = item.used_size / 1024;
-				ViewBag.usedLogPercent = item.used_percent;
+				TempData["params"] = "Please, Select a Database";
+				return RedirectToAction("index");
 			}
+			else
+			{
+				ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
+				//string database = ViewData["selecteddb"].ToString();
+				ViewBag.tableCount = GetTableCount(selectedDB);
+				ViewBag.viewCount = GetViewsCount(selectedDB);
+				ViewBag.indexCount = GetIndexesCount(selectedDB);
+				FetchLogUsage(selectedDB);
+				foreach (var item in ls)
+				{
+					ViewBag.totalLogSpace = item.total_size / 1024;
+					ViewBag.usedLogSpace = item.used_size / 1024;
+					ViewBag.usedLogPercent = item.used_percent;
+				}
 
-			FetchDBFileLocations(selectedDB);
+				FetchDBFileLocations(selectedDB);
 
 				return View(df);
+			}
+			
 		}
 
 		public IActionResult Snapshot()
@@ -107,7 +116,7 @@ namespace dba_tool.Controllers
 		public IActionResult Snapshot(SnapshotDetails snapshots)
 		{
 			
-			return Redirect("https://localhost:7065/report/Snap");
+			return Redirect("~/report/Snap");
 		}
 
 		

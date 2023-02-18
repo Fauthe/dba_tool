@@ -63,9 +63,18 @@ namespace dba_tool.Controllers
 		{
 			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			createSnapshot(database, snapshot);
-			await Task.Delay(1000);
-			return RedirectToAction("SnapshotDetails");
+			if (database == null || snapshot == null)
+			{
+				TempData["param"] = "Provide All Details";
+				return Redirect("~/alldb/Snapshot");
+			}
+			else
+			{
+				createSnapshot(database, snapshot);
+				await Task.Delay(1000);
+				return RedirectToAction("SnapshotDetails");
+			}
+				
 		}
 
 		public IActionResult DeleteSnap(string snapname)
