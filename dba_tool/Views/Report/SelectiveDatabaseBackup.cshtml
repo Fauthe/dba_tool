@@ -1,5 +1,5 @@
 ﻿@{
-	ViewData["Title"] = "Take Snapshot";
+	ViewData["Title"] = "View Backups";
 }
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -8,12 +8,12 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Snapshot</h1>
+					<h1>View Backups</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Snapshot</li>
+						<li class="breadcrumb-item active">View Backups</li>
 					</ol>
 				</div>
 			</div>
@@ -29,11 +29,11 @@
 					<!-- general form elements -->
 					<div class="card card-primary">
 						<div class="card-header">
-							<h3 class="card-title">Take Snapshot</h3>
+							<h3 class="card-title">View Backups</h3>
 						</div>
 						<!-- /.card-header -->
 						<!-- form start -->
-						<form action="~/report/Snap" method="post">
+						<form action="~/report/SelectiveDatabaseBackupDetails" method="post">
 							<div class="card-body">
 								<div class="form-group">
 									<label for="exampleInputEmail1">Database</label><label style="color:red"> *</label>
@@ -55,11 +55,6 @@
 											</select>
 										}
 									}
-									@*<input type="text" class="form-control" id="exampleInputEmail1" value="@ViewBag.SelectedDB" readonly name="database">*@
-								</div>
-								<div class="form-group">
-									<label for="exampleInputPassword1">Snapshot Name</label><label style="color:red"> *</label>
-									<input type="text" class="form-control" id="exampleInputPassword1" placeholder="Provide Snapshot Name" name="snapshot">
 								</div>
 								<div class="form-group">
 									<label class="text-warning">@TempData["param"]</label>
@@ -68,26 +63,9 @@
 							<!-- /.card-body -->
 
 							<div class="card-footer">
-								<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Take Snapshot</button>
+								<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">View Backups</button>
 							</div>
 						</form>
-						<div class="modal fade" id="modal-default">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h4 class="modal-title">Success!!!</h4>
-										<label type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</label>
-									</div>
-									<div class="modal-body">
-										<p>Snapshot Created Successfully&hellip;</p>
-									</div>
-								</div>
-								<!-- /.modal-content -->
-							</div>
-							<!-- /.modal-dialog -->
-						</div>
 					</div>
 					<!-- /.card -->
 					<!-- general form elements -->

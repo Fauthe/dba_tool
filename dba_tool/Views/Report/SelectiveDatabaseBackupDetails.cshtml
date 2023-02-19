@@ -1,8 +1,8 @@
 ﻿@{
-	ViewData["Title"] = "Index Details";
+	ViewData["Title"] = "Selective Database Backups";
 }
 
-@model List<dba_tool.Models.IndexPhysicalStat>
+@model List<dba_tool.Models.SelectiveDatabaseBackupDets>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -10,12 +10,12 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Index Physical Statistics</h1>
+					<h1>Selective Database Backups</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Index Physical Statistics</li>
+						<li class="breadcrumb-item active">Selective Database Backups</li>
 					</ol>
 				</div>
 			</div>
@@ -24,13 +24,12 @@
 
 	<!-- Main content -->
 	<section class="content">
-		
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							<h3 class="card-title">Details on Fragmentation of Indexes within the Database</h3>
+							<h3 class="card-title">Backup Details of Selected Database</h3>
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
@@ -42,11 +41,13 @@
 											<table class="table table-head-fixed text-nowrap">
 												<thead class="table table-bordered table-hover">
 													<tr>
-														<th>Schema Name</th>
-														<th>Table Name</th>
-														<th>Index Name</th>
-														<th>Average Fragmentation %</th>
-														<th>Index Status</th>
+														<th>Server</th>
+														<th>Database</th>
+														<th>Backup Start Date</th>
+														<th>Backup End Date</th>
+														<th>Backup Type</th>
+														<th>Backup Size (MB)</th>
+														<th>Backup Location</th>
 													</tr>
 												</thead>
 												<tbody class="table table-bordered table-hover">
@@ -55,26 +56,17 @@
 														{
 															foreach (var item in Model)
 															{
-																<tr>
-																	<td>@item.schema_name.ToString()</td>
-																	<td>@item.object_name.ToString()</td>
-																	<td>@item.index_name.ToString()</td>
-																	<td>@item.avg_fragmentation_percent</td>
-																	<td>
-																		@{if (item.avg_fragmentation_percent > 15 && item.avg_fragmentation_percent < 30)
-																			{
-																				<h6><a href="~/IndexFixing/Reorganize/?dbname=@ViewBag.SelectedDB&indexName=@item.index_name&schemaName=@item.schema_name&tableName=@item.object_name" style="color:gold; font-weight:bold">REORGANIZE</a></h6>
-																			}
-																			else if (item.avg_fragmentation_percent > 30)
-																			{
-																				<h6><a href="~/IndexFixing/Rebuild/?dbname=@ViewBag.SelectedDB&indexName=@item.index_name&schemaName=@item.schema_name&tableName=@item.object_name" style="color:red; font-weight:bold">REBUILD</a></h6>
-																			}
-																			else
-																			{ <h6 style="color:limegreen; font-weight:bold">HEALTHY</h6>}
-																		}
-																	</td>
+																										<tr>
+																											<td>@item.server.ToString()</td>
+																											<td>@item.database.ToString()</td>
+																											<td>@item.backup_start</td>
+																											<td>@item.backup_end</td>
+																											<td>@item.backup_type.ToString()</td>
+																											<td>@item.backup_size</td>
+																											<td>@item.backup_location.ToString()</td>
 
-																</tr>
+
+																										</tr>
 															}
 														}
 													}
@@ -85,20 +77,20 @@
 									</div>
 								</div>
 							</div>
+
 						</div>
 						<!-- /.card-body -->
 					</div>
 					<!-- /.card -->
-					
-					</div>
-					<!-- /.card-body -->
-					<!--</div>-->
-					<!-- /.card -->
+
 				</div>
-				<!-- /.col -->
+				<!-- /.card-body -->
+				<!--</div>-->
+				<!-- /.card -->
 			</div>
-			<!-- /.row -->
-		
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
 		<!-- /.container-fluid -->
 	</section>
 	<!-- /.content -->

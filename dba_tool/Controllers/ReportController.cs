@@ -9,7 +9,6 @@ namespace dba_tool.Controllers
 {
 	public class ReportController : Controller
 	{
-		SqlDataReader dr;
 		CPUusage cpus = new CPUusage();
 
 		TempDBUsage tdbs = new TempDBUsage();
@@ -22,6 +21,8 @@ namespace dba_tool.Controllers
 
 		Reportcon reportcon = new Reportcon();
 
+		AllDBcon allDBcon= new AllDBcon();
+
 		public IActionResult Index()
 		{
 			return View();
@@ -33,10 +34,14 @@ namespace dba_tool.Controllers
 
 			reportcon.getCPUReport();
 			reportcon.getTempDbReport();
+			reportcon.getOverallLogReport();
+			reportcon.getOverallMemoryReport();
 			reportcon.server.Add(new ServerOverall()
 			{
 				CPUUsages = reportcon.cpu,
-				TempDBUs = reportcon.tdb
+				TempDBUs = reportcon.tdb,
+				OverallLogs = reportcon.overallLog,
+				OverallMemorys = reportcon.memory
 			});
 			return View(reportcon.server);
 		}
@@ -98,6 +103,36 @@ namespace dba_tool.Controllers
 
 
 			return RedirectToAction("SnapshotDetails");
+		}
+
+		public IActionResult SelectiveDatabaseBackup()
+		{
+			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
+			allDBcon.FetchData();
+			return View(allDBcon.dbss); 
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> SelectiveDatabaseBackup(SelectiveDatabaseBackupDets sdbd)
+		{
+			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
+			await Task.Delay(500);
+			return View();
+		}
+		public IActionResult SelectiveDatabaseBackupDetails(string database)
+		{
+			if (database == "Select Database" || database == null)
+			{
+				TempData["params"] = "Please, Select a Database";
+				return Redirect("SelectiveDatabaseBackup");
+			}
+			else
+			{
+				ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
+				reportcon.getUserInputDatabaseBackupDetails(database);
+				return View(reportcon.selectiveDatabaseBackupDet);
+			}
+			
 		}
 
 	}

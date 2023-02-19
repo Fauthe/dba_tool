@@ -8,7 +8,9 @@ namespace dba_tool.IService
 		public Top20Tables getTop20TableByDiskUsage(string dbname);
 		public SQLLoginErrors getLoginErrorLog();
 		public databaseFiles GetMoreDatabaseFiles(string dbname);
-		
+		public Views getAllViews(string dbname);
+
+
 
 	}
 }
