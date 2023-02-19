@@ -22,6 +22,15 @@ namespace dba_tool.Service
 
 		public List<SnapshotDetails> snapshot = new List<SnapshotDetails>();
 		SnapshotDetails snapshots = new SnapshotDetails();
+
+		public List<OverallLog> overallLog= new List<OverallLog>();
+		OverallLog overallLogs = new OverallLog();
+
+		public List<OverallMemory> memory = new List<OverallMemory>();
+		OverallMemory memorys = new OverallMemory();
+
+		public List<SelectiveDatabaseBackupDets> selectiveDatabaseBackupDet = new List<SelectiveDatabaseBackupDets>();
+		SelectiveDatabaseBackupDets selectiveDatabaseBackupDets = new SelectiveDatabaseBackupDets();
 		public void createSnapshot(string dbname, string snapname)
 		{
 			try
@@ -177,6 +186,94 @@ namespace dba_tool.Service
 				throw ex;
 
 			}
+		}
+
+		public OverallLog getOverallLogReport()
+		{
+			try
+			{
+				SqlCommand cmd = new SqlCommand("udp_getOverallLogUsage");
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Connection = DBconnection.DBConnect();
+				dr = cmd.ExecuteReader();
+				while (dr.Read())
+				{
+					overallLog.Add(new OverallLog()
+					{
+						name = dr["DBName"].ToString(),
+						log_used = Convert.ToDouble(dr["LogSize"]),
+						log_used_percent = Convert.ToDouble(dr["LogSpaceUsed_Percent"])
+					});
+				}
+				return overallLogs;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+
+			}
+		}
+
+		public OverallMemory getOverallMemoryReport()
+		{
+			try
+			{
+				SqlCommand cmd = new SqlCommand("udp_getOverallMemoryUsage");
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Connection = DBconnection.DBConnect();
+				dr = cmd.ExecuteReader();
+				while (dr.Read())
+				{
+					memory.Add(new OverallMemory()
+					{
+						parameter = dr["Parameter"].ToString(),
+						value = dr["Value"].ToString()
+					});
+				}
+				return memorys;
+				
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+
+			}
+		}
+		
+		public SelectiveDatabaseBackupDets getUserInputDatabaseBackupDetails(string dbname)
+		{
+			try
+			{
+				SqlCommand cmd = new SqlCommand("udp_getUserInputDatabaseBackupDetails");
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@dbname", dbname);
+				cmd.Connection = DBconnection.DBConnect();
+				dr = cmd.ExecuteReader();
+				while (dr.Read())
+				{
+					selectiveDatabaseBackupDet.Add(new SelectiveDatabaseBackupDets()
+					{
+						server = dr["Server"].ToString(),
+						database = dr["database_name"].ToString(),
+						backup_start = Convert.ToDateTime(dr["backup_start_date"]),
+						backup_end = Convert.ToDateTime(dr["backup_finish_date"]),
+						backup_type = dr["backup_type"].ToString(),
+						backup_size = Convert.ToInt64(dr["backup_size"]) / 1048576,
+						backup_location = dr["physical_device_name"].ToString()
+					});
+				}
+				return selectiveDatabaseBackupDets;
+
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+
+			}
+
 		}
 	}
 }

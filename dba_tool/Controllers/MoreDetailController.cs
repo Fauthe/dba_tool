@@ -10,7 +10,6 @@ namespace dba_tool.Controllers
 {
 	public class MoreDetailController : Controller
 	{
-		SqlDataReader dr;
 		IndexPhysicalStat stats = new IndexPhysicalStat();
 
 		Top20Tables t20ts = new Top20Tables();
@@ -57,6 +56,14 @@ namespace dba_tool.Controllers
 			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
 			moreDetailcon.GetMoreDatabaseFiles(db_name);
 			return View(moreDetailcon.df);
+		}
+
+		public IActionResult MoreView()
+		{
+			var db_name = HttpContext.Session.GetString("selecteddb");
+			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
+			moreDetailcon.getAllViews(db_name);
+			return View(moreDetailcon.view);
 		}
 
 		

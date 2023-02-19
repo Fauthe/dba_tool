@@ -22,6 +22,9 @@ namespace dba_tool.Service
 		public List<databaseFiles> df = new List<databaseFiles>();
 		databaseFiles dfs = new databaseFiles();
 
+		public List<Views> view = new List<Views>();
+		Views views= new Views();
+
 		
 
 		public IndexPhysicalStat GetIndexDetails(string dbname)
@@ -145,6 +148,35 @@ namespace dba_tool.Service
 			}
 		}
 
-		
+		public Views getAllViews(string dbname)
+		{
+			try
+			{
+				SqlCommand cmd = new SqlCommand("udp_getAllViews");
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@dbname", dbname);
+				cmd.Connection = DBconnection.DBConnect();
+				dr = cmd.ExecuteReader();
+				while (dr.Read())
+				{
+					view.Add(new Views()
+					{
+						view = dr["view_name"].ToString(),
+						schema = dr["schema_name"].ToString(),
+						createDate = Convert.ToDateTime(dr["create_date"]),
+						updateDate= Convert.ToDateTime(dr["modify_date"])
+					});
+				}
+				return views;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+
+			}
+		}
+
+
 	}
 }

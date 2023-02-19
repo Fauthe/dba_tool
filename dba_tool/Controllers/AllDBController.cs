@@ -20,18 +20,11 @@ namespace dba_tool.Controllers
 	public class AllDBController : Controller
 	{
 
-		SqlDataReader dr;
-		DBconnection db;
 
-		//List<dbs> dbss = new List<dbs>();
-
-		//List<logSpace> ls = new List<logSpace>();
 		logSpace lsp = new logSpace();
 
-		//List<databaseFiles> df= new List<databaseFiles>();
 		databaseFiles dfs = new databaseFiles();
 
-		//List<SnapshotDetails> snapshot = new List<SnapshotDetails>();
 		SnapshotDetails snapshots = new SnapshotDetails();
 
 		AllDBcon allDBcon = new AllDBcon();
@@ -52,7 +45,7 @@ namespace dba_tool.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult index(dbs databs)
+		public IActionResult Index(dbs databs)
 		{
 
 
@@ -69,8 +62,8 @@ namespace dba_tool.Controllers
 			allDBcon.FetchLogUsage(ViewData["sessionDB"].ToString());
 			foreach (var item in allDBcon.ls)
 			{
-				ViewBag.totalLogSpace = item.total_size / 1024;
-				ViewBag.usedLogSpace = item.used_size / 1024;
+				ViewBag.totalLogSpace = item.total_size ;
+				ViewBag.usedLogSpace = item.used_size ;
 				ViewBag.usedLogPercent = item.used_percent;
 			}
 
@@ -98,8 +91,8 @@ namespace dba_tool.Controllers
 				allDBcon.FetchLogUsage(selectedDB);
 				foreach (var item in allDBcon.ls)
 				{
-					ViewBag.totalLogSpace = item.total_size / 1024;
-					ViewBag.usedLogSpace = item.used_size / 1024;
+					ViewBag.totalLogSpace = item.total_size ;
+					ViewBag.usedLogSpace = item.used_size ;
 					ViewBag.usedLogPercent = item.used_percent;
 				}
 
@@ -113,13 +106,14 @@ namespace dba_tool.Controllers
 		public IActionResult Snapshot()
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			return View();
+			allDBcon.FetchData();
+			return View(allDBcon.dbss);
 		}
 
 		[HttpPost]
 		public IActionResult Snapshot(SnapshotDetails snapshots)
 		{
-			
+			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
 			return Redirect("~/report/Snap");
 		}
 
@@ -136,12 +130,6 @@ namespace dba_tool.Controllers
 			});
 			return View(allDBcon.dataAndLogs);
 		}
-
-
-
-
-
-
 
 
 
