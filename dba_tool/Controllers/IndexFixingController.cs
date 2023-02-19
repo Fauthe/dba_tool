@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using dba_tool.Service;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Xml.Linq;
@@ -7,6 +8,7 @@ namespace dba_tool.Controllers
 {
 	public class IndexFixingController : Controller
 	{
+		IndexFixingcon indexFixingcon = new IndexFixingcon();
 		public IActionResult Index()
 		{
 			return View();
@@ -49,31 +51,11 @@ namespace dba_tool.Controllers
 		public async Task<IActionResult> IndexFix(string name, string index, string schema, string table)
 		{
 			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
-			FixIndex(name, index, schema, table);
+			indexFixingcon.FixIndex(name, index, schema, table);
 			await Task.Delay(1000);
 			return Redirect("~/MoreDetail/MoreIndex");
 		}
 
-		public void FixIndex(string dbname, string indexname, string schemaname, string tablename)
-		{
-			try
-			{
-				SqlCommand cmd = new SqlCommand("udp_reOrganizeIndex");
-				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@schemaname", schemaname);
-				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Parameters.AddWithValue("@tablename", tablename);
-				cmd.Parameters.AddWithValue("@indexname", indexname);
-				cmd.Connection = DBconnection.DBConnect();
-				cmd.ExecuteNonQuery();
-
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-
-			}
-		}
+		
 	}
 }
