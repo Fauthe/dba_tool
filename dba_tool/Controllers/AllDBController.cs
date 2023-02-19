@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 //using System.Web.Providers.Entities;
 using Microsoft.AspNetCore.Http;
 using System.Xml.Linq;
+using dba_tool.Service;
+using dba_tool.IService;
 
 namespace dba_tool.Controllers
 {
@@ -21,17 +23,19 @@ namespace dba_tool.Controllers
 		SqlDataReader dr;
 		DBconnection db;
 
-		List<dbs> dbss = new List<dbs>();
+		//List<dbs> dbss = new List<dbs>();
 
-		List<logSpace> ls = new List<logSpace>();
+		//List<logSpace> ls = new List<logSpace>();
 		logSpace lsp = new logSpace();
 
-		List<databaseFiles> df= new List<databaseFiles>();
+		//List<databaseFiles> df= new List<databaseFiles>();
 		databaseFiles dfs = new databaseFiles();
 
-		List<SnapshotDetails> snapshot = new List<SnapshotDetails>();
+		//List<SnapshotDetails> snapshot = new List<SnapshotDetails>();
 		SnapshotDetails snapshots = new SnapshotDetails();
-		
+
+		AllDBcon allDBcon = new AllDBcon();
+
 		private readonly ILogger<AllDBController> _logger;
 
 		public AllDBController(ILogger<AllDBController> logger)
@@ -41,9 +45,9 @@ namespace dba_tool.Controllers
 
 		public IActionResult Index()
 		{
-			FetchData();
+			allDBcon.FetchData();
 			
-			return View(dbss);
+			return View(allDBcon.dbss);
 
 		}
 
@@ -59,19 +63,19 @@ namespace dba_tool.Controllers
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
 			ViewData["sessionDB"] = HttpContext.Session.GetString("selecteddb");
-			ViewBag.tableCount = GetTableCount(ViewData["sessionDB"].ToString());
-			ViewBag.viewCount = GetViewsCount(ViewData["sessionDB"].ToString());
-			ViewBag.indexCount = GetIndexesCount(ViewData["sessionDB"].ToString());
-			FetchLogUsage(ViewData["sessionDB"].ToString());
-			foreach (var item in ls)
+			ViewBag.tableCount = allDBcon.GetTableCount(ViewData["sessionDB"].ToString());
+			ViewBag.viewCount = allDBcon.GetViewsCount(ViewData["sessionDB"].ToString());
+			ViewBag.indexCount = allDBcon.GetIndexesCount(ViewData["sessionDB"].ToString());
+			allDBcon.FetchLogUsage(ViewData["sessionDB"].ToString());
+			foreach (var item in allDBcon.ls)
 			{
 				ViewBag.totalLogSpace = item.total_size / 1024;
 				ViewBag.usedLogSpace = item.used_size / 1024;
 				ViewBag.usedLogPercent = item.used_percent;
 			}
 
-			FetchDBFileLocations(ViewData["sessionDB"].ToString());
-			return View(df);
+			allDBcon.FetchDBFileLocations(ViewData["sessionDB"].ToString());
+			return View(allDBcon.df);
 		}
 
 		public IActionResult Dashboard(string selectedDB)
@@ -88,20 +92,20 @@ namespace dba_tool.Controllers
 			{
 				ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
 				//string database = ViewData["selecteddb"].ToString();
-				ViewBag.tableCount = GetTableCount(selectedDB);
-				ViewBag.viewCount = GetViewsCount(selectedDB);
-				ViewBag.indexCount = GetIndexesCount(selectedDB);
-				FetchLogUsage(selectedDB);
-				foreach (var item in ls)
+				ViewBag.tableCount = allDBcon.GetTableCount(selectedDB);
+				ViewBag.viewCount = allDBcon.GetViewsCount(selectedDB);
+				ViewBag.indexCount = allDBcon.GetIndexesCount(selectedDB);
+				allDBcon.FetchLogUsage(selectedDB);
+				foreach (var item in allDBcon.ls)
 				{
 					ViewBag.totalLogSpace = item.total_size / 1024;
 					ViewBag.usedLogSpace = item.used_size / 1024;
 					ViewBag.usedLogPercent = item.used_percent;
 				}
 
-				FetchDBFileLocations(selectedDB);
+				allDBcon.FetchDBFileLocations(selectedDB);
 
-				return View(df);
+				return View(allDBcon.df);
 			}
 			
 		}
@@ -119,164 +123,27 @@ namespace dba_tool.Controllers
 			return Redirect("~/report/Snap");
 		}
 
-		
-
 		public IActionResult DiskUsage()
 		{
-			//ViewBag.Name = name;
-			return View();
+			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
+			var db_name = HttpContext.Session.GetString("selecteddb");
+			allDBcon.FetchLogUsage(db_name);
+			allDBcon.GetDataFileUsage(db_name);
+			allDBcon.dataAndLogs.Add(new DataAndLog()
+			{
+				dataFiles = allDBcon.dataFiles,
+				logSpaces = allDBcon.ls
+			});
+			return View(allDBcon.dataAndLogs);
 		}
 
 
-		public void FetchData()
-		{
-			try
-			{
-				
-				string sql = "Select name from sys.databases where database_id > 4;";
-				dr = DBconnection.ExecuteQuery(sql);
-				while (dr.Read())
-				{
-					dbss.Add(new dbs()
-					{
-						Name = dr["name"].ToString()
-					});
-				}
-				
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-
-			}
-		}
-
-		public int GetTableCount(string dbname)
-		{
-			string result = "";
-			try
-			{
-				SqlCommand cmd = new SqlCommand("udp_getTableCount");
-				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
-				result = cmd.ExecuteScalar().ToString();
-				return int.Parse(result);
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-
-			}
-		}
-
-		public int GetViewsCount(string dbname)
-		{
-			string result = "";
-			try
-			{
-				SqlCommand cmd = new SqlCommand("udp_getViewsCount");
-				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
-				result = cmd.ExecuteScalar().ToString();
-				return int.Parse(result);
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-
-			}
-		}
-
-		public int GetIndexesCount(string dbname)
-		{
-			string result = "";
-			try
-			{
-				SqlCommand cmd = new SqlCommand("udp_getIndexesCount");
-				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
-				result = cmd.ExecuteScalar().ToString();
-				return int.Parse(result);
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-
-			}
-		}
-
-		public logSpace FetchLogUsage(string dbname)
-		{
-			
-			
-			try
-			{
-
-				SqlCommand cmd = new SqlCommand("udp_FetchLogUsage");
-				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
-				dr = cmd.ExecuteReader();
-				while (dr.Read())
-				{
-					ls.Add(new logSpace()
-					{
-						id = Convert.ToInt32(dr["database_id"]),
-						total_size = Convert.ToInt64(dr["total_log_size_in_bytes"]),
-						used_size = Convert.ToInt64(dr["used_log_space_in_bytes"]),
-						used_percent = Convert.ToInt64(dr["used_log_space_in_percent"])
-
-					});
-				}
-				return lsp;
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-
-			}
-		}
-
-		public databaseFiles FetchDBFileLocations(string dbname)
-		{
 
 
-			try
-			{
-				SqlCommand cmd = new SqlCommand("udp_FetchDBFileLocations");
-				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
-				dr = cmd.ExecuteReader();
-				while (dr.Read())
-				{
-					df.Add(new databaseFiles()
-					{
-						
-						file_name = new List<string>() { dr["name"].ToString() },
-						file_path = new List<string>() { dr["physical_name"].ToString() }
-
-					});
-				}
-				return dfs;
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-
-			}
-		}
 
 
-		
-		
+
+
+
 	}
 }

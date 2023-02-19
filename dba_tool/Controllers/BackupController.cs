@@ -1,4 +1,5 @@
 ﻿using dba_tool.Models;
+using dba_tool.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -8,14 +9,15 @@ namespace dba_tool.Controllers
 {
 	public class BackupController : Controller
 	{
-		SqlDataReader dr;
+		//SqlDataReader dr;
 		List<dbs> dbss = new List<dbs>();
 
-		List<Backups> backup = new List<Backups>();
 		Backups backups = new Backups();
 
-		List<TempDiffTran> tempdt = new List<TempDiffTran>();
 		TempDiffTran tempdts = new TempDiffTran();
+
+		AllDBcon allDBcon= new AllDBcon();
+		Backupcon backupcon = new Backupcon();
 		public IActionResult Index()
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
@@ -25,8 +27,8 @@ namespace dba_tool.Controllers
 		public IActionResult FullBackup()
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			FetchData();
-			return View(dbss);
+			allDBcon.FetchData();
+			return View(allDBcon.dbss);
 		}
 
 		[HttpPost]
@@ -45,7 +47,7 @@ namespace dba_tool.Controllers
 			}
 			else
 			{
-				TakeFullBackup(selectedDB, fullbackup);
+				backupcon.TakeFullBackup(selectedDB, fullbackup);
 				await Task.Delay(1000);
 				return Redirect("~/Report/BackupDetails");
 			}
@@ -54,8 +56,8 @@ namespace dba_tool.Controllers
 		public IActionResult DifferentialBackup()
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			FetchData();
-			return View(dbss);
+			allDBcon.FetchData();
+			return View(allDBcon.dbss);
 
 		}
 
@@ -71,8 +73,8 @@ namespace dba_tool.Controllers
 		{
 
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			SpecificDatabaseBackupDetail(selectedDB);
-			foreach (var item in tempdt)
+			backupcon.SpecificDatabaseBackupDetail(selectedDB);
+			foreach (var item in backupcon.tempdt)
 			{
 				ViewBag.a = item.recovery_model_desc;
 				ViewBag.b = item.physical_device_name;
@@ -102,7 +104,7 @@ namespace dba_tool.Controllers
 		{
 
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			TakeDifferentialBackup(dbname, diffbak);
+			backupcon.TakeDifferentialBackup(dbname, diffbak);
 
 			await Task.Delay(1000);
 
@@ -114,24 +116,24 @@ namespace dba_tool.Controllers
 		public IActionResult TransactionalBackup()
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			FetchData();
-			return View(dbss);
+			allDBcon.FetchData();
+			return View(allDBcon.dbss);
 		}
 
 		[HttpPost]
 		public IActionResult TransactionalBackup(dbs datas)
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			FetchData();
-			return View(dbss);
+			allDBcon.FetchData();
+			return View(allDBcon.dbss);
 		}
 
 		public IActionResult CheckFullBackupForTran(string selectedDB, string tranbackup)
 		{
 
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			SpecificDatabaseBackupDetail(selectedDB);
-			foreach (var item in tempdt)
+			backupcon.SpecificDatabaseBackupDetail(selectedDB);
+			foreach (var item in backupcon.tempdt)
 			{
 				ViewBag.a = item.recovery_model_desc;
 				ViewBag.b = item.physical_device_name;
@@ -160,141 +162,13 @@ namespace dba_tool.Controllers
 		public async Task<IActionResult> TakeTransactionalBak(string dbname, string tranbak)
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			TakeTransactionalBackup(dbname, tranbak);
+			backupcon.TakeTransactionalBackup(dbname, tranbak);
 
 			await Task.Delay(1000);
 
 			return Redirect("~/Report/BackupDetails");
 		}
 
-		public void FetchData()
-		{
-			try
-			{
-
-				string sql = "Select name from sys.databases where database_id > 4;";
-				dr = DBconnection.ExecuteQuery(sql);
-				while (dr.Read())
-				{
-					dbss.Add(new dbs()
-					{
-						Name = dr["name"].ToString()
-					});
-				}
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-
-			}
-		}
-
-		public void TakeFullBackup(string dbname, string backupname)
-		{
-			try
-			{
-				SqlCommand cmd = new SqlCommand("udp_getFullBackup");
-				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Parameters.AddWithValue("@backupname", backupname);
-				cmd.Connection = DBconnection.DBConnect();
-				cmd.ExecuteNonQuery();
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-
-			}
-		}
-
-
-
-
-		public Backups TakeDifferentialBackup(string dbname, string backupname)
-		{
-			try
-			{
-				SqlCommand cmd = new SqlCommand("upd_getDifferentialBackup");
-				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Parameters.AddWithValue("@backupname", backupname);
-				cmd.Connection = DBconnection.DBConnect();
-				dr = cmd.ExecuteReader();
-				while (dr.Read())
-				{
-					backup.Add(new Backups()
-					{
-						dbname = dr["name"].ToString(),
-						last_backup_time = dr["last_backup_time"].ToString(),
-						recovery_model = dr["recovery_model_desc"].ToString(),
-						state = dr["state_desc"].ToString(),
-						backup_type = dr["backup_type"].ToString(),
-						backup_file_location = dr["physical_device_name"].ToString()
-					}); ;
-				}
-				return backups;
-			}
-			catch(Exception ex)
-			{
-				throw ex;
-			}
-		}
-
-		public Backups TakeTransactionalBackup(string dbname, string backupname)
-		{
-			try
-			{
-				SqlCommand cmd = new SqlCommand("upd_getTransactionalBackup");
-				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Parameters.AddWithValue("@backupname", backupname);
-				cmd.Connection = DBconnection.DBConnect();
-				dr = cmd.ExecuteReader();
-				while (dr.Read())
-				{
-					backup.Add(new Backups()
-					{
-						dbname = dr["name"].ToString(),
-						last_backup_time = dr["last_backup_time"].ToString(),
-						recovery_model = dr["recovery_model_desc"].ToString(),
-						state = dr["state_desc"].ToString(),
-						backup_type = dr["backup_type"].ToString(),
-						backup_file_location = dr["physical_device_name"].ToString()
-					}); ;
-				}
-				return backups;
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
-
-		public TempDiffTran SpecificDatabaseBackupDetail(string dbname)
-		{
-			try
-			{
-				SqlCommand cmd = new SqlCommand("upd_specificDatabaseBackupInfo");
-				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
-				dr = cmd.ExecuteReader();
-				while (dr.Read())
-				{
-					tempdt.Add(new TempDiffTran()
-					{
-						recovery_model_desc = dr["recovery_model_desc"].ToString(),
-						physical_device_name = dr["physical_device_name"].ToString()
-					}); ;
-				}
-				return tempdts;
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
+		
 	}
 }
