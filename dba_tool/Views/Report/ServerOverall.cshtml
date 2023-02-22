@@ -2,6 +2,11 @@
 @{
 	ViewData["Title"] = "Server Overall";
 }
+
+@{
+	Layout = "_Layout";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,11 +91,11 @@
 
 																		foreach (var x in item.OverallLogs)
 																		{
-																														<tr>
-																															<td>@x.name.ToString()</td>
-																															<td>@x.log_used</td>
-																															<td>@x.log_used_percent</td>
-																														</tr>
+																			<tr>
+																				<td>@x.name.ToString()</td>
+																				<td>@x.log_used</td>
+																				<td>@x.log_used_percent</td>
+																			</tr>
 
 																		}
 																	}
@@ -259,7 +264,7 @@
 											<!-- /.card -->
 										</div>
 									</div>
-									
+
 								</div>
 							</div>
 							<!-- /.card-body-->

@@ -1,6 +1,10 @@
 ﻿@{
 	ViewData["Title"] = "Selective Database Backups";
 }
+@{
+	Layout = "_Layout";
+}
+
 
 @model List<dba_tool.Models.SelectiveDatabaseBackupDets>
 <!-- Content Wrapper. Contains page content -->
@@ -56,17 +60,17 @@
 														{
 															foreach (var item in Model)
 															{
-																										<tr>
-																											<td>@item.server.ToString()</td>
-																											<td>@item.database.ToString()</td>
-																											<td>@item.backup_start</td>
-																											<td>@item.backup_end</td>
-																											<td>@item.backup_type.ToString()</td>
-																											<td>@item.backup_size</td>
-																											<td>@item.backup_location.ToString()</td>
+																<tr>
+																	<td>@item.server.ToString()</td>
+																	<td>@item.database.ToString()</td>
+																	<td>@item.backup_start</td>
+																	<td>@item.backup_end</td>
+																	<td>@item.backup_type.ToString()</td>
+																	<td>@item.backup_size</td>
+																	<td>@item.backup_location.ToString()</td>
 
 
-																										</tr>
+																</tr>
 															}
 														}
 													}

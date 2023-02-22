@@ -49,7 +49,7 @@ namespace dba_tool.Controllers
 			{
 				backupcon.TakeFullBackup(selectedDB, fullbackup);
 				await Task.Delay(1000);
-				return Redirect("~/Report/BackupDetails");
+				return Redirect("~/Report/SelectiveDatabaseBackupDetails/?database="+selectedDB);
 			}
 			
 		}
@@ -108,7 +108,7 @@ namespace dba_tool.Controllers
 
 			await Task.Delay(1000);
 
-			return Redirect("~/Report/BackupDetails");
+			return Redirect("~/Report/SelectiveDatabaseBackupDetails/?database=" + dbname);
 		}
 
 
@@ -166,7 +166,7 @@ namespace dba_tool.Controllers
 
 			await Task.Delay(1000);
 
-			return Redirect("~/Report/BackupDetails");
+			return Redirect("~/Report/SelectiveDatabaseBackupDetails/?database=" + dbname);
 		}
 
 		
