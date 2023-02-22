@@ -2,6 +2,11 @@
 	ViewData["Title"] = "View Details";
 }
 
+@{
+	Layout = "_Layout";
+}
+
+
 @model List<dba_tool.Models.Views>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -53,13 +58,13 @@
 														{
 															foreach (var item in Model)
 															{
-																										<tr>
-																											<td>@item.view.ToString()</td>
-																											<td>@item.schema.ToString()</td>
-																											<td>@item.createDate</td>
-																											<td>@item.updateDate</td>
+																<tr>
+																	<td>@item.view.ToString()</td>
+																	<td>@item.schema.ToString()</td>
+																	<td>@item.createDate</td>
+																	<td>@item.updateDate</td>
 
-																										</tr>
+																</tr>
 															}
 														}
 													}
@@ -70,7 +75,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 						</div>
 						<!-- /.card-body -->
 					</div>
@@ -84,10 +89,9 @@
 			<!-- /.col -->
 		</div>
 		<!-- /.row -->
-
-<!-- /.container-fluid -->
+		<!-- /.container-fluid -->
 	</section>
-<!-- /.content -->
+	<!-- /.content -->
 </div>
 
 <!-- jQuery -->
