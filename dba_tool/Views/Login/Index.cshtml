@@ -1,13 +1,9 @@
-﻿@{
-	Layout = "ForLoginOnly";
-}
-
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>DBA Tool | Log in </title>
 
 	<!-- Google Font: Source Sans Pro -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -23,14 +19,14 @@
 		<!-- /.login-logo -->
 		<div class="card card-outline card-primary">
 			<div class="card-header text-center">
-				<a href="~/theme/index2.html" class="h1"><b>Fauthe's</b>DBA Tool</a>
+				<a href="~/Login/index" class="h1"><b>FAUTHE'S</b><br>DBA Tool</a>
 			</div>
 			<div class="card-body">
 				<p class="login-box-msg">Sign in to start your session</p>
 
-				<form action="../../index3.html" method="post">
+				<form action="~/Login/VerifyLogin" method="post">
 					<div class="input-group mb-3">
-						<input type="email" class="form-control" placeholder="Username">
+						<input type="text" class="form-control" placeholder="Username" name="username">
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fas fa-envelope"></span>
@@ -38,13 +34,14 @@
 						</div>
 					</div>
 					<div class="input-group mb-3">
-						<input type="password" class="form-control" placeholder="Password">
+						<input type="password" class="form-control" placeholder="Password" name="password">
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fas fa-lock"></span>
 							</div>
 						</div>
 					</div>
+					<div><label>@TempData["ErrorMsg"]</label></div>
 					<div class="row">
 						<div class="col-8">
 							<div class="icheck-primary">
@@ -61,7 +58,6 @@
 						<!-- /.col -->
 					</div>
 				</form>
-
 				<!-- /.social-auth-links -->
 
 				<p class="mb-1">
@@ -79,5 +75,25 @@
 	<script src="~/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
 	<script src="~/theme/dist/js/adminlte.min.js"></script>
+	<!--<div class="modal fade" id="modal-default">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Success!!!</h4>
+					<label type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</label>
+				</div>
+				<div class="modal-body">
+					<p>Snapshot Created Successfully&hellip;</p>
+				</div>
+			</div>-->
+			<!-- /.modal-content -->
+		<!--</div>-->
+		<!-- /.modal-dialog -->
+	<!--</div>-->
+
 </body>
+
+
 </html>
