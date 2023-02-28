@@ -19,12 +19,12 @@
 		<!-- /.login-logo -->
 		<div class="card card-outline card-primary">
 			<div class="card-header text-center">
-				<a href="~/Login/index" class="h1"><b>FAUTHE'S</b><br>DBA Tool</a>
+				<a href="~/Login/index" class="h1"><b>FAUTHE'S</b><br>DBA TOOL</a>
 			</div>
 			<div class="card-body">
 				<p class="login-box-msg">Sign in to start your session</p>
 
-				<form action="~/Login/VerifyLogin" method="post">
+				<form action="~/Login/VerifyUsername" method="post">
 					<div class="input-group mb-3">
 						<input type="text" class="form-control" placeholder="Username" name="username">
 						<div class="input-group-append">
@@ -41,7 +41,7 @@
 							</div>
 						</div>
 					</div>
-					<div><label>@TempData["ErrorMsg"]</label></div>
+					<div><label class="text-danger">@TempData["ErrorMsg"]</label></div>
 					<div class="row">
 						<div class="col-8">
 							<div class="icheck-primary">
