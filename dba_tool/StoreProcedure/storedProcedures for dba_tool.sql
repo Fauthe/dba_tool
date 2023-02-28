@@ -631,3 +631,33 @@ ORDER BY
    end
 GO
 /*-------------------------------------------------------------------------------------------------*/
+
+
+------------------------------------------------------------------------------------------------
+--- 26. Checks whether entered username exists or not ---
+------------------------------------------------------------------------------------------------
+create or Alter proc udp_checkUsername
+@username varchar(50)
+as
+begin
+select name, password_hash from sys.sql_logins
+where name = @username
+end
+GO
+/*-------------------------------------------------------------------------------------------------*/
+
+
+------------------------------------------------------------------------------------------------
+--- 27. Checks whether password matches or not ---
+------------------------------------------------------------------------------------------------
+create or alter proc udp_VerifyLogin
+@username varchar(50),
+@password varchar(max)
+as
+begin
+declare @temp_pass varbinary(max)
+select @temp_pass = password_hash from sys.sql_logins where name = @username;
+select PWDCOMPARE(@password,@temp_pass) as result;
+end;
+go
+/*-------------------------------------------------------------------------------------------------*/

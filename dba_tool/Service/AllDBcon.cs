@@ -2,12 +2,15 @@
 using dba_tool.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using Microsoft.AspNetCore.Mvc;
 using System.Drawing.Imaging;
+using dba_tool.Controllers;
 
 namespace dba_tool.Service
 {
 	public class AllDBcon : IAllDBcon
 	{
+		LoginController lc;
 		SqlDataReader dr;
 		public List<dbs> dbss = new List<dbs>();
 
@@ -55,7 +58,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("udp_FetchDBFileLocations");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
+				
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -85,7 +92,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("udp_FetchLogUsage");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -116,7 +127,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("udp_getIndexesCount");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				result = cmd.ExecuteScalar().ToString();
 				return int.Parse(result);
 
@@ -136,7 +151,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("udp_getTableCount");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				result = cmd.ExecuteScalar().ToString();
 				return int.Parse(result);
 
@@ -156,7 +175,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("udp_getTableCount");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				result = cmd.ExecuteScalar().ToString();
 				return int.Parse(result);
 
@@ -175,7 +198,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("udp_getDataFileUsage");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@name", dbname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
