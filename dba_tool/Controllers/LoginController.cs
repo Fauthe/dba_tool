@@ -6,6 +6,10 @@ namespace dba_tool.Controllers
 {
 	public class LoginController : Controller
 	{
+		GetConnectionString gcs = new GetConnectionString();
+		public List<conString> cs = new List<conString>();
+		public conString css = new conString();
+
 		LoginCon lgn = new LoginCon();
 		public IActionResult Index()
 		{
@@ -19,8 +23,14 @@ namespace dba_tool.Controllers
 			return View(lgn.Credential);
 		}
 
-		public IActionResult VerifyUsername(string username, string password)
+		public IActionResult VerifyUsername(string instance, string username, string password)
 		{
+			string conn = gcs.ConnectionString(instance);
+			cs.Add(new conString
+			{
+				instances = conn
+			});
+			//TempData["instance"] = instance;
 			if (username != null && password != null)
 			{
 				lgn.checkUsername(username);
@@ -63,6 +73,7 @@ namespace dba_tool.Controllers
 
 		public IActionResult VerifyLogin()
 		{
+			//string inst = TempData["instance"].ToString();
 			string usrname = TempData["username"].ToString();
 			string password = TempData["password"].ToString();
 			lgn.verifyLogin(usrname, password);

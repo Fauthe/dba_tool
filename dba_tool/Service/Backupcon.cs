@@ -1,4 +1,5 @@
-﻿using dba_tool.IService;
+﻿using dba_tool.Controllers;
+using dba_tool.IService;
 using dba_tool.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -7,6 +8,7 @@ namespace dba_tool.Service
 {
 	public class Backupcon : IBackupcon
 	{
+		LoginController lc;
 		SqlDataReader dr;
 		public List<dbs> dbss = new List<dbs>();
 
@@ -24,7 +26,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("upd_specificDatabaseBackupInfo");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -50,7 +56,11 @@ namespace dba_tool.Service
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
 				cmd.Parameters.AddWithValue("@backupname", backupname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -80,7 +90,11 @@ namespace dba_tool.Service
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
 				cmd.Parameters.AddWithValue("@backupname", backupname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				cmd.ExecuteNonQuery();
 
 			}
@@ -99,7 +113,11 @@ namespace dba_tool.Service
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
 				cmd.Parameters.AddWithValue("@backupname", backupname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{

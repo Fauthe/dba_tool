@@ -1,4 +1,5 @@
-﻿using dba_tool.IService;
+﻿using dba_tool.Controllers;
+using dba_tool.IService;
 using dba_tool.Models;
 using Microsoft.Data.SqlClient;
 using NuGet.Protocol.Plugins;
@@ -7,8 +8,10 @@ using System.Net;
 
 namespace dba_tool.Service
 {
+
 	public class MoreDetailcon : IMoreDetailcon
 	{
+		LoginController lc;
 		SqlDataReader dr;
 		public List<IndexPhysicalStat> stat = new List<IndexPhysicalStat>();
 		IndexPhysicalStat stats = new IndexPhysicalStat();
@@ -34,7 +37,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("udp_getIndexPhysicalStat");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -62,7 +69,11 @@ namespace dba_tool.Service
 			{
 				SqlCommand cmd = new SqlCommand("udp_getLoginErrorLog");
 				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -90,7 +101,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("udp_getDatabaseFiles");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -123,7 +138,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("udp_getTop20TableByDiskUsage");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -155,7 +174,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("udp_getAllViews");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{

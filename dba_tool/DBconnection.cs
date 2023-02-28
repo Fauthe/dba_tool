@@ -1,4 +1,7 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using dba_tool.Controllers;
+using dba_tool.Models;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
+using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Drawing;
 
@@ -26,11 +29,17 @@ namespace dba_tool
 
 		//	}
 		//}
+		public static LoginController lc;
 
-		public static SqlConnection DBConnect()
+
+
+
+
+		public static SqlConnection DBConnect(string instance)
 		{
 			var conn = new SqlConnection();
-			conn.ConnectionString = "Data Source=DESKTOP-FM5935J\\TESTNODE;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+			//conn.ConnectionString = "Data Source="+instance+";Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+			conn.ConnectionString = instance;
 			if (conn.State != ConnectionState.Open)
 			{
 				conn.Open();
@@ -41,10 +50,15 @@ namespace dba_tool
 		}
 		public static DataTable GetTableByQuery(string SqlQuery)
 		{
+			
 			try
 			{
 				SqlCommand command = new SqlCommand();
-				command.Connection = DBConnect();
+				//command.Connection = DBConnect();
+				foreach (var item in lc.cs)
+				{
+					command.Connection = DBconnection.DBConnect(item.instances);
+				}
 				command.CommandText = SqlQuery;
 				command.CommandType = System.Data.CommandType.Text;
 				SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -62,7 +76,11 @@ namespace dba_tool
 			try
 			{
 				SqlCommand command = new SqlCommand();
-				command.Connection = DBConnect();
+				//command.Connection = DBConnect();
+				foreach (var item in lc.cs)
+				{
+					command.Connection = DBconnection.DBConnect(item.instances);
+				}
 				command.CommandText = SqlQuery;
 				command.CommandType = CommandType.Text;
 				command.ExecuteNonQuery();
@@ -79,7 +97,11 @@ namespace dba_tool
 			try
 			{
 				SqlCommand command = new SqlCommand();
-				command.Connection = DBConnect();
+				//command.Connection = DBConnect();
+				foreach (var item in lc.cs)
+				{
+					command.Connection = DBconnection.DBConnect(item.instances);
+				}
 				command.CommandText = SqlQuery;
 				command.CommandType = CommandType.Text;
 				return command.ExecuteReader();

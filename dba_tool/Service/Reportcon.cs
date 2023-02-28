@@ -1,4 +1,5 @@
-﻿using dba_tool.IService;
+﻿using dba_tool.Controllers;
+using dba_tool.IService;
 using dba_tool.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -7,6 +8,7 @@ namespace dba_tool.Service
 {
 	public class Reportcon : IReportcon
 	{
+		LoginController lc;
 		SqlDataReader dr;
 		public List<CPUusage> cpu = new List<CPUusage>();
 		CPUusage cpus = new CPUusage();
@@ -39,7 +41,11 @@ namespace dba_tool.Service
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
 				cmd.Parameters.AddWithValue("@snapshot", snapname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				cmd.ExecuteNonQuery();
 
 
@@ -72,7 +78,11 @@ namespace dba_tool.Service
 			{
 				SqlCommand cmd = new SqlCommand("udp_getBackupsDetails");
 				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -102,7 +112,11 @@ namespace dba_tool.Service
 			{
 				SqlCommand cmd = new SqlCommand("udp_getCpuUsage");
 				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -131,7 +145,11 @@ namespace dba_tool.Service
 			{
 				SqlCommand cmd = new SqlCommand("udp_getSnapshotsDetails");
 				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -163,7 +181,11 @@ namespace dba_tool.Service
 			{
 				SqlCommand cmd = new SqlCommand("udp_getTempdbUsage");
 				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -194,7 +216,11 @@ namespace dba_tool.Service
 			{
 				SqlCommand cmd = new SqlCommand("udp_getOverallLogUsage");
 				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -221,7 +247,11 @@ namespace dba_tool.Service
 			{
 				SqlCommand cmd = new SqlCommand("udp_getOverallMemoryUsage");
 				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -249,7 +279,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("udp_getUserInputDatabaseBackupDetails");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@dbname", dbname);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{

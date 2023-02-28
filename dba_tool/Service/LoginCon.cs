@@ -1,4 +1,5 @@
-﻿using dba_tool.IService;
+﻿using dba_tool.Controllers;
+using dba_tool.IService;
 using dba_tool.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -10,6 +11,7 @@ namespace dba_tool.Service
 {
 	public class LoginCon : ILoginCon
 	{
+		LoginController lc;
 		SqlDataReader dr;
 		public List<LoginCredential> Credential= new List<LoginCredential>();
 		public LoginCredential Credentials = new LoginCredential();
@@ -23,7 +25,11 @@ namespace dba_tool.Service
 				SqlCommand cmd = new SqlCommand("udp_checkUsername");
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@username", user);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -53,7 +59,11 @@ namespace dba_tool.Service
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@username", username);
 				cmd.Parameters.AddWithValue("@password", password);
-				cmd.Connection = DBconnection.DBConnect();
+				//cmd.Connection = DBconnection.DBConnect();
+				foreach (var item in lc.cs)
+				{
+					cmd.Connection = DBconnection.DBConnect(item.instances);
+				}
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
