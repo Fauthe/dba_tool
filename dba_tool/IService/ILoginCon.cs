@@ -6,5 +6,6 @@ namespace dba_tool.IService
 	{
 
 		public LoginCredential checkUsername(string user);
+		public LoginCredential verifyLogin(string username, string password);
 	}
 }
