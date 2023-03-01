@@ -4,7 +4,7 @@ namespace dba_tool.IService
 {
 	public interface IAllDBcon
 	{
-		public void FetchData();
+		public void FetchData(string inst);
 		public int GetTableCount(string dbname);
 		public int GetViewsCount(string dbname);
 		public int GetIndexesCount(string dbname);

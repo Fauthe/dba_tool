@@ -24,10 +24,10 @@ namespace dba_tool.Controllers
 			return View();
 		}
 
-		public IActionResult FullBackup()
+		public IActionResult FullBackup(string inst)
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			allDBcon.FetchData();
+			allDBcon.FetchData(inst);
 			return View(allDBcon.dbss);
 		}
 
@@ -53,10 +53,10 @@ namespace dba_tool.Controllers
 			}
 			
 		}
-		public IActionResult DifferentialBackup()
+		public IActionResult DifferentialBackup(string inst)
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			allDBcon.FetchData();
+			allDBcon.FetchData(inst);
 			return View(allDBcon.dbss);
 
 		}
@@ -113,10 +113,10 @@ namespace dba_tool.Controllers
 
 
 
-		public IActionResult TransactionalBackup()
+		public IActionResult TransactionalBackup(string inst)
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			allDBcon.FetchData();
+			allDBcon.FetchData(inst);
 			return View(allDBcon.dbss);
 		}
 
@@ -124,8 +124,8 @@ namespace dba_tool.Controllers
 		public IActionResult TransactionalBackup(dbs datas)
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			allDBcon.FetchData();
-			return View(allDBcon.dbss);
+			//allDBcon.FetchData();
+			return View();
 		}
 
 		public IActionResult CheckFullBackupForTran(string selectedDB, string tranbackup)

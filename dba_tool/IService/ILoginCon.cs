@@ -5,7 +5,7 @@ namespace dba_tool.IService
 	public interface ILoginCon
 	{
 
-		public LoginCredential checkUsername(string user);
-		public LoginCredential verifyLogin(string username, string password);
+		public LoginCredential checkUsername(string user, string instance);
+		public LoginCredential verifyLogin(string username, string password, string instance);
 	}
 }

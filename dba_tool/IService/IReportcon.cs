@@ -9,7 +9,7 @@ namespace dba_tool.IService
 		public Backups getBackupReport();
 		public void createSnapshot(string dbname, string snapname);
 		public SnapshotDetails getSnapshotDetails();
-		public void drop_snapshot(string snap_name);
+		public void drop_snapshot(string snap_name, string inst);
 		public OverallLog getOverallLogReport();
 		public OverallMemory getOverallMemoryReport();
 		public SelectiveDatabaseBackupDets getUserInputDatabaseBackupDetails(string dbname);

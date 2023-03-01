@@ -30,6 +30,7 @@ namespace dba_tool
 		//	}
 		//}
 		public static LoginController lc;
+		public static string constrs { get; set; }
 
 
 
@@ -48,17 +49,14 @@ namespace dba_tool
 			return conn;
 
 		}
-		public static DataTable GetTableByQuery(string SqlQuery)
+		public static DataTable GetTableByQuery(string SqlQuery, string instance)
 		{
 			
 			try
 			{
 				SqlCommand command = new SqlCommand();
 				//command.Connection = DBConnect();
-				foreach (var item in lc.cs)
-				{
-					command.Connection = DBconnection.DBConnect(item.instances);
-				}
+					command.Connection = DBconnection.DBConnect(instance);
 				command.CommandText = SqlQuery;
 				command.CommandType = System.Data.CommandType.Text;
 				SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -71,16 +69,13 @@ namespace dba_tool
 				throw;
 			}
 		}
-		public static void ExecuteNonQuery(String SqlQuery)
+		public static void ExecuteNonQuery(String SqlQuery, string instance)
 		{
 			try
 			{
 				SqlCommand command = new SqlCommand();
 				//command.Connection = DBConnect();
-				foreach (var item in lc.cs)
-				{
-					command.Connection = DBconnection.DBConnect(item.instances);
-				}
+					command.Connection = DBconnection.DBConnect(instance);
 				command.CommandText = SqlQuery;
 				command.CommandType = CommandType.Text;
 				command.ExecuteNonQuery();
@@ -92,16 +87,13 @@ namespace dba_tool
 			}
 		}
 
-		public static SqlDataReader ExecuteQuery(String SqlQuery)
+		public static SqlDataReader ExecuteQuery(String SqlQuery, string instance)
 		{
 			try
 			{
 				SqlCommand command = new SqlCommand();
 				//command.Connection = DBConnect();
-				foreach (var item in lc.cs)
-				{
-					command.Connection = DBconnection.DBConnect(item.instances);
-				}
+					command.Connection = DBconnection.DBConnect(instance);
 				command.CommandText = SqlQuery;
 				command.CommandType = CommandType.Text;
 				return command.ExecuteReader();

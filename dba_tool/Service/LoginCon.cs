@@ -18,7 +18,7 @@ namespace dba_tool.Service
 
 		public List<LoginCredential> Credential1 = new List<LoginCredential>();
 		public LoginCredential Credentials1 = new LoginCredential();
-		public LoginCredential checkUsername(string user)
+		public LoginCredential checkUsername(string user, string instance)
 		{
 			try
 			{
@@ -26,10 +26,7 @@ namespace dba_tool.Service
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@username", user);
 				//cmd.Connection = DBconnection.DBConnect();
-				foreach (var item in lc.cs)
-				{
-					cmd.Connection = DBconnection.DBConnect(item.instances);
-				}
+					cmd.Connection = DBconnection.DBConnect(instance);
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -51,7 +48,7 @@ namespace dba_tool.Service
 
 		}
 
-		public LoginCredential verifyLogin(string username, string password)
+		public LoginCredential verifyLogin(string username, string password, string instance)
 		{
 			try
 			{
@@ -60,10 +57,7 @@ namespace dba_tool.Service
 				cmd.Parameters.AddWithValue("@username", username);
 				cmd.Parameters.AddWithValue("@password", password);
 				//cmd.Connection = DBconnection.DBConnect();
-				foreach (var item in lc.cs)
-				{
-					cmd.Connection = DBconnection.DBConnect(item.instances);
-				}
+					cmd.Connection = DBconnection.DBConnect(instance);
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
