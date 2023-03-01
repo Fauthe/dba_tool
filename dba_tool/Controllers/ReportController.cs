@@ -94,21 +94,21 @@ namespace dba_tool.Controllers
 			return RedirectToAction("Temp_SnapshotDetails");
 		}
 
-		public async Task<IActionResult> Temp_SnapshotDetails(string database)
+		public async Task<IActionResult> Temp_SnapshotDetails(string database, string inst)
 		{
 			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
 			await Task.Delay(1000);
-			reportcon.drop_snapshot(database);
+			reportcon.drop_snapshot(database, inst);
 			
 
 
 			return RedirectToAction("SnapshotDetails");
 		}
 
-		public IActionResult SelectiveDatabaseBackup()
+		public IActionResult SelectiveDatabaseBackup(string inst)
 		{
 			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
-			allDBcon.FetchData();
+			allDBcon.FetchData(inst);
 			return View(allDBcon.dbss); 
 		}
 

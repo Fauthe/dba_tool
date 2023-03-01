@@ -36,9 +36,9 @@ namespace dba_tool.Controllers
 			_logger = logger;
 		}
 
-		public IActionResult Index()
+		public IActionResult Index(string inst)
 		{
-			allDBcon.FetchData();
+			allDBcon.FetchData(inst);
 			
 			return View(allDBcon.dbss);
 
@@ -103,10 +103,10 @@ namespace dba_tool.Controllers
 			
 		}
 
-		public IActionResult Snapshot()
+		public IActionResult Snapshot(string inst)
 		{
 			ViewBag.SelectedDB = HttpContext.Session.GetString("selecteddb");
-			allDBcon.FetchData();
+			allDBcon.FetchData(inst);
 			return View(allDBcon.dbss);
 		}
 

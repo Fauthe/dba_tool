@@ -57,12 +57,12 @@ namespace dba_tool.Service
 			}
 		}
 
-		public void drop_snapshot(string snap_name)
+		public void drop_snapshot(string snap_name, string inst)
 		{
 			try
 			{
 				string sql = $"Use master; Drop Database {snap_name};";
-				DBconnection.ExecuteNonQuery(sql);
+				DBconnection.ExecuteNonQuery(sql, inst);
 
 			}
 			catch (Exception ex)

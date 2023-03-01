@@ -28,13 +28,13 @@ namespace dba_tool.Service
 
 		public List<DataAndLog> dataAndLogs = new List<DataAndLog>();
 		DataAndLog dataAndLog = new DataAndLog();
-		public void FetchData()
+		public void FetchData(string inst)
 		{
 			try
 			{
 
 				string sql = "Select name from sys.databases where database_id > 4;";
-				dr = DBconnection.ExecuteQuery(sql);
+				dr = DBconnection.ExecuteQuery(sql, inst);
 				while (dr.Read())
 				{
 					dbss.Add(new dbs()

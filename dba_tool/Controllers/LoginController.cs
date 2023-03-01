@@ -6,6 +6,7 @@ namespace dba_tool.Controllers
 {
 	public class LoginController : Controller
 	{
+		DBconnection db;
 		GetConnectionString gcs = new GetConnectionString();
 		public List<conString> cs = new List<conString>();
 		public conString css = new conString();
@@ -26,14 +27,15 @@ namespace dba_tool.Controllers
 		public IActionResult VerifyUsername(string instance, string username, string password)
 		{
 			string conn = gcs.ConnectionString(instance);
-			cs.Add(new conString
-			{
-				instances = conn
-			});
+			DBconnection.constrs = conn;
+			//cs.Add(new conString
+			//{
+			//	instances = conn
+			//});
 			//TempData["instance"] = instance;
 			if (username != null && password != null)
 			{
-				lgn.checkUsername(username);
+				lgn.checkUsername(username, conn);
 				foreach (var item in lgn.Credential)
 				{
 					
@@ -41,7 +43,9 @@ namespace dba_tool.Controllers
 					{
 						TempData["username"] = username;
 						TempData["password"] = password;
+						TempData["instance"] = conn;
 						//TempData["ErrorMsg"] = "User Does Exists";
+						//return Redirect("~/Login/Index");
 						return RedirectToAction("VerifyLogin");
 					}
 				}
@@ -76,7 +80,8 @@ namespace dba_tool.Controllers
 			//string inst = TempData["instance"].ToString();
 			string usrname = TempData["username"].ToString();
 			string password = TempData["password"].ToString();
-			lgn.verifyLogin(usrname, password);
+			string conStrst = TempData["instance"].ToString();
+			lgn.verifyLogin(usrname, password, conStrst);
 			foreach(var item in lgn.Credential1)
 			{
 				if(item.result==0)
@@ -87,7 +92,8 @@ namespace dba_tool.Controllers
 				if(item.result==1)
 				{
 					//TempData["ErrorMsg"] = "Login Successful";
-					return Redirect("~/AllDB/Index");
+					return Redirect("~/AllDB/Index/?inst="+conStrst);
+					//return Redirect("~/Login/Index");
 				}
 			}
 			return View();
