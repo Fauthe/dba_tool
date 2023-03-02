@@ -26,6 +26,15 @@ namespace dba_tool.Controllers
 
 		public IActionResult VerifyUsername(string instance, string username, string password)
 		{
+			try
+			{
+
+			
+			if (instance == null)
+			{
+				TempData["ErrorMsg"] = "Enter Server Name";
+				return Redirect("~/Login/Index");
+			}
 			string conn = gcs.ConnectionString(instance);
 			DBconnection.constrs = conn;
 			//cs.Add(new conString
@@ -70,6 +79,12 @@ namespace dba_tool.Controllers
 
 
 			return View();
+			}
+			catch(Exception ex)
+			{
+				TempData["ErrorMsg"] = "Server is Not Accessible!!!";
+				return Redirect("~/Login/Index");
+			}
 
 
 
