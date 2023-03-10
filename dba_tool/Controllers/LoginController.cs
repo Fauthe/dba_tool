@@ -107,7 +107,7 @@ namespace dba_tool.Controllers
 				if(item.result==1)
 				{
 					//TempData["ErrorMsg"] = "Login Successful";
-					return Redirect("~/AllDB/Index/?inst="+conStrst);
+					return Redirect("~/Dashboard/Index/?inst="+conStrst);
 					//return Redirect("~/Login/Index");
 				}
 			}
