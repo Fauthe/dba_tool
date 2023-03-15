@@ -33,5 +33,25 @@ namespace dba_tool.Service
 
 			}
 		}
+
+		public double getOverallCpu(string instance)
+		{
+			double result;
+			try
+			{
+
+				SqlCommand cmd = new SqlCommand("udp_getOverallCpuUsage");
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Connection = DBconnection.DBConnect(instance);
+				result = Convert.ToDouble(cmd.ExecuteScalar());
+				return result;
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+
+			}
+		}
 	}
 }

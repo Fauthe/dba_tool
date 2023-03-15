@@ -210,17 +210,14 @@ namespace dba_tool.Service
 			}
 		}
 
-		public OverallLog getOverallLogReport()
+		public OverallLog getOverallLogReport(string inst)
 		{
 			try
 			{
 				SqlCommand cmd = new SqlCommand("udp_getOverallLogUsage");
 				cmd.CommandType = CommandType.StoredProcedure;
 				//cmd.Connection = DBconnection.DBConnect();
-				foreach (var item in lc.cs)
-				{
-					cmd.Connection = DBconnection.DBConnect(item.instances);
-				}
+					cmd.Connection = DBconnection.DBConnect(inst);
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{
@@ -241,17 +238,14 @@ namespace dba_tool.Service
 			}
 		}
 
-		public OverallMemory getOverallMemoryReport()
+		public OverallMemory getOverallMemoryReport(string inst)
 		{
 			try
 			{
 				SqlCommand cmd = new SqlCommand("udp_getOverallMemoryUsage");
 				cmd.CommandType = CommandType.StoredProcedure;
 				//cmd.Connection = DBconnection.DBConnect();
-				foreach (var item in lc.cs)
-				{
-					cmd.Connection = DBconnection.DBConnect(item.instances);
-				}
+					cmd.Connection = DBconnection.DBConnect(inst);
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{

@@ -6,5 +6,6 @@
 		public List<CPUusage> CPUUsages { get; set;}
 		public List<OverallLog> OverallLogs { get; set;}
 		public List<OverallMemory> OverallMemorys { get; set; }
+		public List<SQLLoginErrors> loginErrors { get; set;}
 	}
 }

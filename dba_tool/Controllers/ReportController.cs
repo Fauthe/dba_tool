@@ -34,8 +34,8 @@ namespace dba_tool.Controllers
 
 			reportcon.getCPUReport();
 			reportcon.getTempDbReport();
-			reportcon.getOverallLogReport();
-			reportcon.getOverallMemoryReport();
+			//reportcon.getOverallLogReport();
+			//reportcon.getOverallMemoryReport();
 			reportcon.server.Add(new ServerOverall()
 			{
 				CPUUsages = reportcon.cpu,
