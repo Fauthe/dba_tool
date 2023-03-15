@@ -63,17 +63,14 @@ namespace dba_tool.Service
 			}
 		}
 
-		public SQLLoginErrors getLoginErrorLog()
+		public SQLLoginErrors getLoginErrorLog(string inst)
 		{
 			try
 			{
 				SqlCommand cmd = new SqlCommand("udp_getLoginErrorLog");
 				cmd.CommandType = CommandType.StoredProcedure;
 				//cmd.Connection = DBconnection.DBConnect();
-				foreach (var item in lc.cs)
-				{
-					cmd.Connection = DBconnection.DBConnect(item.instances);
-				}
+					cmd.Connection = DBconnection.DBConnect(inst);
 				dr = cmd.ExecuteReader();
 				while (dr.Read())
 				{

@@ -10,8 +10,8 @@ namespace dba_tool.IService
 		public void createSnapshot(string dbname, string snapname);
 		public SnapshotDetails getSnapshotDetails();
 		public void drop_snapshot(string snap_name, string inst);
-		public OverallLog getOverallLogReport();
-		public OverallMemory getOverallMemoryReport();
+		public OverallLog getOverallLogReport(string inst);
+		public OverallMemory getOverallMemoryReport(string inst);
 		public SelectiveDatabaseBackupDets getUserInputDatabaseBackupDetails(string dbname);
 
 	}

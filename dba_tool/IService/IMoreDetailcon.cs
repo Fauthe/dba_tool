@@ -6,7 +6,7 @@ namespace dba_tool.IService
 	{
 		public IndexPhysicalStat GetIndexDetails(string dbname);
 		public Top20Tables getTop20TableByDiskUsage(string dbname);
-		public SQLLoginErrors getLoginErrorLog();
+		public SQLLoginErrors getLoginErrorLog(string inst);
 		public databaseFiles GetMoreDatabaseFiles(string dbname);
 		public Views getAllViews(string dbname);
 

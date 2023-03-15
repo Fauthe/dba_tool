@@ -661,3 +661,32 @@ select PWDCOMPARE(@password,@temp_pass) as result;
 end;
 go
 /*-------------------------------------------------------------------------------------------------*/
+
+
+------------------------------------------------------------------------------------------------
+--- 28. Returns Overall CPU Usage ---
+------------------------------------------------------------------------------------------------
+create or alter proc udp_getOverallCpuUsage
+as
+begin
+ select sum(CPUTimeAs) as Overall_Cpu_Usage
+ from
+ (
+ SELECT 
+ [Database] 
+ ,[CPUTimeAsMS] 
+ ,CAST([CPUTimeAsMS] * 1.0 / SUM([CPUTimeAsMS]) OVER() * 100.0 AS DECIMAL(5, 2)) AS [CPUTimeAs]
+ FROM (SELECT 
+ dmpa.DatabaseID
+ , DB_Name(dmpa.DatabaseID) AS [Database]
+ , SUM(dmqs.total_worker_time) AS CPUTimeAsMS
+ FROM sys.dm_exec_query_stats dmqs 
+ CROSS APPLY 
+ (SELECT 
+ CONVERT(INT, value) AS [DatabaseID] 
+ FROM sys.dm_exec_plan_attributes(dmqs.plan_handle)
+ WHERE attribute = N'dbid') dmpa
+ GROUP BY dmpa.DatabaseID) as CPU_Per_Db
+ --ORDER BY [CPUTimeAsMS] DESC
+ ) as cpu_usg;
+ end

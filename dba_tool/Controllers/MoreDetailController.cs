@@ -46,7 +46,7 @@ namespace dba_tool.Controllers
 		public IActionResult LoginError()
 		{
 			ViewData["selecteddb"] = HttpContext.Session.GetString("selecteddb");
-			moreDetailcon.getLoginErrorLog();
+			//moreDetailcon.getLoginErrorLog();
 			return View(moreDetailcon.login);
 		}
 
